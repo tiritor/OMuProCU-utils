@@ -1,0 +1,177 @@
+
+syntax = "proto3";
+
+package til;
+
+import "bfrt_proto/bfruntime.proto";
+
+import "til/til_msg.proto";
+import "til/time_measurement.proto";
+
+enum UpdateAction {
+    UPDATE_ACTION_UNSPECIFIED = 0;
+    UPDATE_ACTION_CREATE = 1;
+    UPDATE_ACTION_UPDATE = 2;
+    UPDATE_ACTION_DELETE = 3;
+}
+
+enum UpdateStatus {
+    UPDATE_STATUS_UNSPECIFIED = 0;
+    UPDATE_STATUS_WAIT_FOR_UPDATE = 1;
+    UPDATE_STATUS_UPDATING = 2;
+    UPDATE_STATUS_UPDATED_SUCCESS = 3;
+    UPDATE_STATUS_UPDATED_FAILURE = 4;
+    UPDATE_STATUS_DELETED_SUCCESS = 5;
+    UPDATE_STATUS_DELETED_FAILURE = 6;
+}
+
+enum ScheduleStatus {
+    SCHEDULE_STATUS_UNSPECIFIED = 0;
+    SCHEDULE_STATUS_SCHEDULED = 1;
+    SCHEDULE_STATUS_PROCESSING = 2;
+    SCHEDULE_STATUS_PROCESSING_FAILED = 3;
+    SCHEDULE_STATUS_PROCESSED = 4;
+    SCHEDULE_STATUS_DELETED = 5;
+}
+
+enum AcceleratorType {
+    ACCELERATOR_TYPE_UNSPECIFIED = 0;
+    ACCELERATOR_TYPE_BMV2 = 1;
+    ACCELERATOR_TYPE_TNA = 2;
+}
+
+// -----------
+
+service SchedulerCommunicator {
+    rpc Schedule (ScheduleRequest) returns (ScheduleResponse);
+    rpc GetScheduledConfigs (ScheduleRequest) returns (ScheduleResponse);
+    rpc IsScheduled (ScheduleRequest) returns (ScheduleResponse);
+    rpc RestartSchedulerLoop(ScheduleRequest) returns (ScheduleResponse);
+    rpc SetScheduleStatus (ScheduleRequest) returns (ScheduleResponse);
+    rpc GetScheduleStatus (ScheduleRequest) returns (ScheduleResponse);
+    rpc DeleteScheduledConfig (ScheduleRequest) returns (ScheduleResponse);
+    rpc Cleanup (ScheduleRequest) returns (ScheduleResponse);
+}
+
+service NOSUpdaterCommunicator {
+    rpc GetUpdateConfigs (NOSUpdateRequest) returns (NOSUpdateResponse);
+    rpc GetUpdateStatus (NOSUpdateRequest) returns (NOSUpdateResponse);
+    rpc SetUpdateStatus (NOSUpdateRequest) returns (NOSUpdateResponse);
+    rpc Update (NOSUpdateRequest) returns (NOSUpdateResponse);
+    rpc Cleanup (NOSUpdateRequest) returns (NOSUpdateResponse);
+    // rpc Delete
+}
+
+service INUpdaterCommunicator {
+    rpc GetUpdateConfigs (INUpdateRequest) returns (INUpdateResponse);
+    rpc GetUpdateStatus (INUpdateRequest) returns (INUpdateResponse);
+    rpc SetUpdateStatus (INUpdateRequest) returns (INUpdateResponse);
+    rpc SetDevInitModeForAccelerator (INUpdateRequest) returns (INUpdateResponse);
+    rpc GetDevInitModeForAccelerator (INUpdateRequest) returns (INUpdateResponse);
+    rpc Update (INUpdateRequest) returns (INUpdateResponse);
+    rpc Cleanup (INUpdateRequest) returns (INUpdateResponse);
+    // rpc Delete
+}
+
+service TIFUpdateCommunicator {
+    rpc GetTIFCode (TIFRequest) returns (TIFResponse);
+    rpc UpdateTIFCode (TIFRequest) returns (TIFResponse);
+    rpc InitializeHardware (TIFRequest) returns (TIFResponse);
+  }
+
+// -----------
+
+message INTenantConfig {
+    TenantMetadata tenantMetadata = 1;
+    AccessRules accessRules = 2; 
+    string mainIngressName = 3;
+    string p4Code = 4;
+    UpdateAction updateAction = 5;
+    AcceleratorType acceleratorType = 6;
+    uint32 processTime = 7;
+}
+
+// ----------- Schedule Commmunication
+
+message ScheduleRequest {
+    TenantMetadata tenantMetadata = 1;
+    ScheduleMessage scheduleMessage = 2;
+    ScheduleStatus scheduleStatus = 3;
+    UpdateAction updateAction = 4;
+}
+
+message ScheduleResponse {
+    uint32 status = 1;
+    string message = 2;
+    repeated ScheduleMessage scheduledDeployment = 3;
+    ScheduleStatus scheduleStatus = 4;
+    ScheduleTimeMeasurement scheduleTimeMeasurement = 5;
+}
+
+message ScheduleMessage {
+    UpdateAction updateAction = 1;
+    TenantConfig tConfig = 2;
+    INTenantConfig inTConfig = 3;
+    UpdateStatus updateStatus = 4;
+    ScheduleStatus scheduleStatus = 5;
+}
+
+// ----------- Updater Commmunication
+
+message NOSUpdateRequest {
+    TenantMetadata tenantMetadata = 1;
+    TenantConfig tConfig = 2;
+    UpdateAction updateAction = 3;
+    UpdateStatus updateStatus = 4;
+}
+
+message NOSUpdateResponse {
+    uint32 status = 1;
+    string message = 2;
+    repeated TenantConfig tConfigs = 3;
+    repeated UpdateAction updateAction = 4;
+    UpdateStatus updateStatus = 5;
+    NOSUpdateTimeMeasurement nosUpdateTimeMeasurement = 6;
+}
+
+message INUpdateRequest {
+    TenantMetadata tenantMetadata = 1;
+    repeated INTenantConfig inTConfig = 2;
+    UpdateStatus updateStatus = 3;
+    bool forceUpdate = 4;
+    bfrt_proto.SetForwardingPipelineConfigRequest.DevInitMode devInitMode = 5;
+    AcceleratorType acceleratorType = 6;
+}
+
+message INUpdateResponse {
+    uint32 status = 1;
+    string message = 2;
+    repeated INTenantConfig inTConfig = 3;
+    UpdateStatus updateStatus = 4;
+    INUpdateTimeMeasurement inUpdateTimeMeasurement = 5;
+    TIFTimeMeasurement tifTimeMeasurement = 6;
+}
+
+message Bmv2ForwardingPipelineConfig {
+    P4Code compiledP4Code = 1;
+    P4Code compiledP4InfoCode = 2;
+}
+
+message TIFRequest {
+    TenantMetadata tenantMetadata = 1;
+    AcceleratorType acceleratorType = 2;
+    repeated TenantFuncDescription tenantFuncDescriptions = 3;
+    bfrt_proto.SetForwardingPipelineConfigRequest bfFwdPipelineConfigRequest = 4;
+    Bmv2ForwardingPipelineConfig bmv2ForwardingPipelineConfig = 5;
+}
+  
+message TIFResponse {
+    uint32 status = 1;
+    string message = 2;
+    AcceleratorType acceleratorType = 3;
+    repeated TenantFuncDescription tenantFuncDescriptions = 4;
+    bfrt_proto.SetForwardingPipelineConfigRequest bfFwdPipelineConfigRequest = 5;
+    repeated bfrt_proto.ForwardingPipelineConfig bfFwdPipelineConfig = 6;
+    Bmv2ForwardingPipelineConfig bmv2ForwardingPipelineConfig = 7;
+    TIFTimeMeasurement tifTimeMeasurement = 8;
+}

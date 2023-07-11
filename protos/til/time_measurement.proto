@@ -1,0 +1,68 @@
+
+syntax = "proto3";
+
+package til;
+
+import "til/til_msg.proto";
+
+
+// -----------
+
+service TimeMeasurementCommunicator {
+    rpc GetTimeMeasurementForMultipleTenants (TimeMeasurementRequest) returns (stream TimeMeasurementResponse);
+    rpc GetStreamedTimeMeasurementForMultipleTenants (stream TimeMeasurementRequest) returns (stream TimeMeasurementResponse);
+    rpc GetStreamedTimeMeasurementForTenant (TimeMeasurementRequest) returns (stream TimeMeasurementResponse);
+    rpc RemoveTimeMeasurementFromTenant (TimeMeasurementRequest) returns (TimeMeasurementResponse);
+}
+
+message TimeMeasurementRequest {
+    TenantMetadata tenantMetadata = 1;
+    TimeMeasurement timeMeasurement = 2;
+}
+
+message TimeMeasurementResponse {
+    TenantMetadata tenantMetadata = 1;
+    TimeMeasurement timeMeasurement = 2;
+    uint32 status = 3;
+    string message = 4;
+}
+
+message TimeMeasurement {
+    DeploymentTimeMeasurement deploymentTimeMeasurement = 1;
+    ValidationTimeMeasurement validationTimeMeasurement = 2; 
+    ScheduleTimeMeasurement scheduleTimeMeasurement = 3;
+    NOSUpdateTimeMeasurement nosUpdateTimeMeasurement = 4;
+    INUpdateTimeMeasurement inUpdateTimeMeasurement = 5;
+    TIFTimeMeasurement tifTimeMeasurement = 6;
+}
+
+message DeploymentTimeMeasurement {
+    uint64 deploymentTime = 1;
+}
+
+message ValidationTimeMeasurement {
+    uint64 validationTime = 1;
+}
+
+message ScheduleTimeMeasurement {
+    uint64 scheduledTime = 1;
+    uint64 processingTime = 2;
+}
+
+message NOSUpdateTimeMeasurement {
+    uint64 nosPreprocessTime = 1;
+    uint64 nosUpdateTime = 2;
+}
+
+message INUpdateTimeMeasurement {
+    uint64 inPreprocessTime = 1;
+    uint64 inCompileTime = 2;
+    uint64 inUpdateTime = 3;
+    uint64 inPostProcessTime = 4;
+}
+
+message TIFTimeMeasurement {
+    uint64 tifPreprocessTime = 1;
+    uint64 tifUpdateTime = 2;
+    uint64 tifPostUpdateTime = 3;
+}

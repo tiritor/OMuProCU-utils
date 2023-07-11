@@ -1,0 +1,201 @@
+
+syntax = "proto3";
+
+package til;
+
+// import "google/proto/Empty";
+
+// import "p4/config/v1/p4info.proto";
+// import "p4/v1/p4runtime.proto";
+
+// option go_package = "github.com/p4lang/p4runtime/go/p4";
+
+// -----------
+
+enum CountermeasureAction {
+  COUNTERMEASURE_ACTION_UNSPECIFIED = 0;
+  COUNTERMEASURE_ACTION_ACCEPT = 1;
+  COUNTERMEASURE_ACTION_SOFT = 2;
+  COUNTERMEASURE_ACTION_HARD = 3;
+  COUNTERMEASURE_ACTION_DROP = 4;
+}
+
+// -----------
+
+service DeploymentCommunicator {
+  rpc Create (DeploymentRequest) returns (DeploymentResponse);
+  rpc Update (DeploymentRequest) returns (DeploymentResponse);
+  rpc Delete (DeploymentRequest) returns (DeploymentResponse);
+  rpc Cleanup (DeploymentRequest) returns (DeploymentResponse);
+  rpc RestartSchedulerLoop(DeploymentRequest) returns (DeploymentResponse);
+}
+
+service TILCommunicator {
+  rpc CreateTIL (TILRequest) returns (TILReply) {  }; 
+  rpc UpdateTIL (TILRequest) returns (TILReply) {  };
+  rpc DeleteTIL (TILRequest) returns (TILReply) {  };
+  rpc GetTIL (TILRequest) returns (TILReply) {  };
+  rpc ListTIL (TILRequest) returns (TILReply) {  };
+}
+
+service CCCommunicator {
+  rpc GetCountermeasureConfig (CountermeasureControlRequest) 
+    returns (CountermeasureControlResponse);
+  rpc ListCountermeasureConfig (Empty) 
+    returns (CountermeasureControlResponse);
+  rpc UpdateCountermeasureConfig (CountermeasureControlRequest) 
+    returns (CountermeasureControlResponse);
+  rpc DeleteCountermeasureConfig (CountermeasureControlRequest) 
+    returns (CountermeasureControlResponse);
+  rpc CreateCountermeasureConfig (CountermeasureControlRequest) 
+    returns (CountermeasureControlResponse);
+}
+
+service TCCommunicator {
+  rpc CreateTenantConfig (TenantConfigRequest) returns (TenantConfigResponse);
+  rpc DeleteTenantConfig (TenantConfigRequest) returns (TenantConfigResponse); 
+  rpc UpdateTenantConfig (TenantConfigRequest) returns (TenantConfigResponse);
+  rpc GetTenantConfig (TenantConfigRequest) returns (TenantConfigResponse);
+  rpc ListTenantConfigs (TenantConfigRequest) returns (TenantConfigResponse);
+  rpc GetRuntimeRules (TenantConfigRequest) returns (TenantConfigResponse);
+  rpc UpdateRuntimeRules (TenantConfigRequest) returns (TenantConfigResponse);
+  // rpc ListRuntimeRules (TenantConfigRequest) returns (TenantConfigResponse);
+}
+
+
+// -----------
+
+message Empty {
+  
+}
+
+// -----------
+
+message TenantMetadata {
+  uint32 tenantId = 1;
+  string tenantFuncName = 2;
+  uint64 deploymentSubmissionId = 3;
+}
+
+message AccessRules {
+  // uint32 tcaport = 1; // only int16 should be supported
+  reserved 1;
+  repeated uint32 vnis = 2; // only int48 should be supported
+}
+
+message TenantFuncDescription {
+  TenantMetadata tenantMetadata = 1;
+  uint32 tenantFuncId = 2;
+}
+
+// ----------- Deployment Communication
+
+message DeploymentMessage {
+  TenantMetadata tenantMetadata = 1;
+  string deploymentRaw = 2;
+}
+
+message DeploymentRequest {
+  TenantMetadata tenantMetadata = 1;
+  DeploymentMessage deploymentMessage = 2;
+}
+
+message DeploymentResponse {
+  uint32 status = 1;
+  string message = 2;
+  DeploymentMessage deploymentMessage = 3;
+}
+
+// ----------- Countermeasure Controller Communication
+
+message CountermeasureConfiguration{
+  CountermeasureAction default_action = 1;
+  
+  message CountermeasureRule {
+    uint64 vni = 1;
+    uint32 src_ip = 2;
+    uint32 dst_ip = 3;
+    uint32 src_port = 4;
+    uint32 dst_port = 5;
+    uint32 ip_proto = 6;
+    CountermeasureAction action = 7;
+  }
+
+  repeated CountermeasureRule rules = 2;
+}
+
+message CountermeasureControlRequest {
+  TenantMetadata tenantMetadata = 1;
+  // optional AccessRules accessRules = 2;
+  reserved 2;
+  CountermeasureConfiguration cm_config = 3;
+}
+
+message CountermeasureControlResponse {
+  uint32 status = 1;
+  string message = 2;
+  repeated CountermeasureConfiguration cc_configs = 3;
+}
+
+// ----------- TCC Message
+
+message TenantConfig {
+  TenantMetadata tenantMetadata = 1;
+  AccessRules accessRules = 2;
+  
+  message RuntimeRule {
+    enum RuntimeTableAction {
+      RUNTIME_TABLE_ACTION_UNSPECIFIED = 0;
+      RUNTIME_TABLE_ACTION_ADD = 1;
+      RUNTIME_TABLE_ACTION_UPDATE = 2;
+      RUNTIME_TABLE_ACTION_REMOVE = 3;
+    }
+
+    RuntimeTableAction tableMode = 1;
+    string table = 2;
+    string actionName = 3;
+    repeated string matches = 4;
+    repeated string actionParams = 5;
+  }
+  repeated RuntimeRule rRules = 3;
+
+  string deployment = 4;
+}
+
+message TenantConfigRequest {
+  TenantMetadata tenantMetadata = 1;
+  TenantConfig tConfig = 2;
+}
+
+message TenantConfigResponse {
+  uint32 status = 1;
+  string message = 2;
+  repeated TenantConfig tConfigs = 3;
+}
+
+// -----------
+
+message P4Code {
+  string code = 1;
+}
+
+// ----------- (Overall Message?)
+
+message TILConfiguration {
+  TenantMetadata tenantMetadata = 1;
+  CountermeasureConfiguration config = 2;
+  AccessRules accessRules = 3;
+
+  repeated TenantConfig.RuntimeRule runtimeRules = 4;
+}
+
+message TILRequest { 
+  TenantMetadata tenantMetadata = 1;
+  TILConfiguration config = 2;
+}
+
+message TILReply {
+  uint32 status = 1;
+  string message = 2;
+  repeated TILConfiguration configs = 3;
+}
