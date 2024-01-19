@@ -20,6 +20,20 @@ enum CountermeasureAction {
   COUNTERMEASURE_ACTION_DROP = 4;
 }
 
+enum DeploymentStatus {
+  DEPLOYMENT_STATUS_UNSPECIFIED = 0;
+  DEPLOYMENT_STATUS_VALIDATING = 1;
+  DEPLOYMENT_STATUS_SCHEDULING = 2;
+  DEPLOYMENT_STATUS_SCHEDULED = 3;
+  DEPLOYMENT_STATUS_UPDATING = 4;
+  DEPLOYMENT_STATUS_NOS_UPDATED = 5;
+  DEPLOYMENT_STATUS_IN_UPDATED = 6;
+  DEPLOYMENT_STATUS_RUNNING = 7;
+  DEPLOYMENT_STATUS_DELETED = 8;
+  DEPLOYMENT_STATUS_REQUEST_DELETE = 9;
+  DEPLOYMENT_STATUS_FAILED = 10;
+}
+
 // -----------
 
 service DeploymentCommunicator {
@@ -28,6 +42,8 @@ service DeploymentCommunicator {
   rpc Delete (DeploymentRequest) returns (DeploymentResponse);
   rpc Cleanup (DeploymentRequest) returns (DeploymentResponse);
   rpc RestartSchedulerLoop(DeploymentRequest) returns (DeploymentResponse);
+  rpc CheckHealth(DeploymentRequest) returns (DeploymentResponse);
+  rpc GetDeploymentMonitorStatus(DeploymentRequest) returns (DeploymentResponse);
 }
 
 service TILCommunicator {
@@ -103,7 +119,9 @@ message DeploymentRequest {
 message DeploymentResponse {
   uint32 status = 1;
   string message = 2;
-  DeploymentMessage deploymentMessage = 3;
+  TenantMetadata tenantMetadata = 3;
+  DeploymentMessage deploymentMessage = 4;
+  DeploymentStatus deploymentStatus = 5;
 }
 
 // ----------- Countermeasure Controller Communication

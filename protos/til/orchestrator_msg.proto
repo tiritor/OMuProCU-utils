@@ -6,6 +6,7 @@ package til;
 import "bfrt_proto/bfruntime.proto";
 
 import "til/til_msg.proto";
+import "til/tif_control.proto";
 import "til/time_measurement.proto";
 
 enum UpdateAction {
@@ -78,6 +79,25 @@ service TIFUpdateCommunicator {
     rpc UpdateTIFCode (TIFRequest) returns (TIFResponse);
     rpc InitializeHardware (TIFRequest) returns (TIFResponse);
   }
+
+service TIFControlCommunicator {
+    rpc GetLAGMemberState (TIFControlRequest) returns (TIFControlResponse);
+    rpc ChangeLAGMemberState (TIFControlRequest) returns (TIFControlResponse);
+    rpc GetPortConfiguration (TIFControlRequest) returns (TIFControlResponse);
+    rpc UpdatePortConfiguration (TIFControlRequest) returns (TIFControlResponse);
+    rpc DeletePortConfiguration (TIFControlRequest) returns (TIFControlResponse);
+    rpc RestartPorts (TIFControlRequest) returns (TIFControlResponse);
+    rpc GetLAGConfiguration (TIFControlRequest) returns (TIFControlResponse);
+    rpc AddLAG (TIFControlRequest) returns (TIFControlResponse);
+    rpc UpdateLAG (TIFControlRequest) returns (TIFControlResponse);
+    rpc DeleteLAG (TIFControlRequest) returns (TIFControlResponse);
+    rpc GetLAGMember (TIFControlRequest) returns (TIFControlResponse);
+    rpc UpdateLAGMember (TIFControlRequest) returns (TIFControlResponse);
+    rpc GetTableEntries (TIFControlRequest) returns (TIFControlResponse);
+    rpc AddTableEntries (TIFControlRequest) returns (TIFControlResponse);
+    rpc UpdateTableEntries (TIFControlRequest) returns (TIFControlResponse);
+    rpc DeleteTableEntries (TIFControlRequest) returns (TIFControlResponse);
+}
 
 // -----------
 
@@ -174,4 +194,24 @@ message TIFResponse {
     repeated bfrt_proto.ForwardingPipelineConfig bfFwdPipelineConfig = 6;
     Bmv2ForwardingPipelineConfig bmv2ForwardingPipelineConfig = 7;
     TIFTimeMeasurement tifTimeMeasurement = 8;
+}
+
+// ---
+message TIFControlRequest {
+    repeated Lag lagGroups = 1;
+    repeated RoutingTableConfiguration nexthopMapEntries = 2;
+    repeated RoutingTableConfiguration ipv4HostEntries = 3;
+    repeated RoutingTableConfiguration arpHostEntries = 4;
+    repeated DpPort dpPorts = 5;
+    bool clear = 6;
+}
+
+message TIFControlResponse {
+    uint32 status = 1;
+    string message = 2;
+    repeated Lag lagGroups = 3;
+    repeated DpPort dpPorts = 4;
+    repeated RoutingTableConfiguration nexthopMapEntries = 5;
+    repeated RoutingTableConfiguration ipv4HostEntries = 6;
+    repeated RoutingTableConfiguration arpHostEntries = 7;
 }

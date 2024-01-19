@@ -882,3 +882,559 @@ class TIFUpdateCommunicator(object):
             til_dot_orchestrator__msg__pb2.TIFResponse.FromString,
             options, channel_credentials,
             insecure, call_credentials, compression, wait_for_ready, timeout, metadata)
+
+
+class TIFControlCommunicatorStub(object):
+    """Missing associated documentation comment in .proto file."""
+
+    def __init__(self, channel):
+        """Constructor.
+
+        Args:
+            channel: A grpc.Channel.
+        """
+        self.GetLAGMemberState = channel.unary_unary(
+                '/til.TIFControlCommunicator/GetLAGMemberState',
+                request_serializer=til_dot_orchestrator__msg__pb2.TIFControlRequest.SerializeToString,
+                response_deserializer=til_dot_orchestrator__msg__pb2.TIFControlResponse.FromString,
+                )
+        self.ChangeLAGMemberState = channel.unary_unary(
+                '/til.TIFControlCommunicator/ChangeLAGMemberState',
+                request_serializer=til_dot_orchestrator__msg__pb2.TIFControlRequest.SerializeToString,
+                response_deserializer=til_dot_orchestrator__msg__pb2.TIFControlResponse.FromString,
+                )
+        self.GetPortConfiguration = channel.unary_unary(
+                '/til.TIFControlCommunicator/GetPortConfiguration',
+                request_serializer=til_dot_orchestrator__msg__pb2.TIFControlRequest.SerializeToString,
+                response_deserializer=til_dot_orchestrator__msg__pb2.TIFControlResponse.FromString,
+                )
+        self.UpdatePortConfiguration = channel.unary_unary(
+                '/til.TIFControlCommunicator/UpdatePortConfiguration',
+                request_serializer=til_dot_orchestrator__msg__pb2.TIFControlRequest.SerializeToString,
+                response_deserializer=til_dot_orchestrator__msg__pb2.TIFControlResponse.FromString,
+                )
+        self.DeletePortConfiguration = channel.unary_unary(
+                '/til.TIFControlCommunicator/DeletePortConfiguration',
+                request_serializer=til_dot_orchestrator__msg__pb2.TIFControlRequest.SerializeToString,
+                response_deserializer=til_dot_orchestrator__msg__pb2.TIFControlResponse.FromString,
+                )
+        self.RestartPorts = channel.unary_unary(
+                '/til.TIFControlCommunicator/RestartPorts',
+                request_serializer=til_dot_orchestrator__msg__pb2.TIFControlRequest.SerializeToString,
+                response_deserializer=til_dot_orchestrator__msg__pb2.TIFControlResponse.FromString,
+                )
+        self.GetLAGConfiguration = channel.unary_unary(
+                '/til.TIFControlCommunicator/GetLAGConfiguration',
+                request_serializer=til_dot_orchestrator__msg__pb2.TIFControlRequest.SerializeToString,
+                response_deserializer=til_dot_orchestrator__msg__pb2.TIFControlResponse.FromString,
+                )
+        self.AddLAG = channel.unary_unary(
+                '/til.TIFControlCommunicator/AddLAG',
+                request_serializer=til_dot_orchestrator__msg__pb2.TIFControlRequest.SerializeToString,
+                response_deserializer=til_dot_orchestrator__msg__pb2.TIFControlResponse.FromString,
+                )
+        self.UpdateLAG = channel.unary_unary(
+                '/til.TIFControlCommunicator/UpdateLAG',
+                request_serializer=til_dot_orchestrator__msg__pb2.TIFControlRequest.SerializeToString,
+                response_deserializer=til_dot_orchestrator__msg__pb2.TIFControlResponse.FromString,
+                )
+        self.DeleteLAG = channel.unary_unary(
+                '/til.TIFControlCommunicator/DeleteLAG',
+                request_serializer=til_dot_orchestrator__msg__pb2.TIFControlRequest.SerializeToString,
+                response_deserializer=til_dot_orchestrator__msg__pb2.TIFControlResponse.FromString,
+                )
+        self.GetLAGMember = channel.unary_unary(
+                '/til.TIFControlCommunicator/GetLAGMember',
+                request_serializer=til_dot_orchestrator__msg__pb2.TIFControlRequest.SerializeToString,
+                response_deserializer=til_dot_orchestrator__msg__pb2.TIFControlResponse.FromString,
+                )
+        self.UpdateLAGMember = channel.unary_unary(
+                '/til.TIFControlCommunicator/UpdateLAGMember',
+                request_serializer=til_dot_orchestrator__msg__pb2.TIFControlRequest.SerializeToString,
+                response_deserializer=til_dot_orchestrator__msg__pb2.TIFControlResponse.FromString,
+                )
+        self.GetTableEntries = channel.unary_unary(
+                '/til.TIFControlCommunicator/GetTableEntries',
+                request_serializer=til_dot_orchestrator__msg__pb2.TIFControlRequest.SerializeToString,
+                response_deserializer=til_dot_orchestrator__msg__pb2.TIFControlResponse.FromString,
+                )
+        self.AddTableEntries = channel.unary_unary(
+                '/til.TIFControlCommunicator/AddTableEntries',
+                request_serializer=til_dot_orchestrator__msg__pb2.TIFControlRequest.SerializeToString,
+                response_deserializer=til_dot_orchestrator__msg__pb2.TIFControlResponse.FromString,
+                )
+        self.UpdateTableEntries = channel.unary_unary(
+                '/til.TIFControlCommunicator/UpdateTableEntries',
+                request_serializer=til_dot_orchestrator__msg__pb2.TIFControlRequest.SerializeToString,
+                response_deserializer=til_dot_orchestrator__msg__pb2.TIFControlResponse.FromString,
+                )
+        self.DeleteTableEntries = channel.unary_unary(
+                '/til.TIFControlCommunicator/DeleteTableEntries',
+                request_serializer=til_dot_orchestrator__msg__pb2.TIFControlRequest.SerializeToString,
+                response_deserializer=til_dot_orchestrator__msg__pb2.TIFControlResponse.FromString,
+                )
+
+
+class TIFControlCommunicatorServicer(object):
+    """Missing associated documentation comment in .proto file."""
+
+    def GetLAGMemberState(self, request, context):
+        """Missing associated documentation comment in .proto file."""
+        context.set_code(grpc.StatusCode.UNIMPLEMENTED)
+        context.set_details('Method not implemented!')
+        raise NotImplementedError('Method not implemented!')
+
+    def ChangeLAGMemberState(self, request, context):
+        """Missing associated documentation comment in .proto file."""
+        context.set_code(grpc.StatusCode.UNIMPLEMENTED)
+        context.set_details('Method not implemented!')
+        raise NotImplementedError('Method not implemented!')
+
+    def GetPortConfiguration(self, request, context):
+        """Missing associated documentation comment in .proto file."""
+        context.set_code(grpc.StatusCode.UNIMPLEMENTED)
+        context.set_details('Method not implemented!')
+        raise NotImplementedError('Method not implemented!')
+
+    def UpdatePortConfiguration(self, request, context):
+        """Missing associated documentation comment in .proto file."""
+        context.set_code(grpc.StatusCode.UNIMPLEMENTED)
+        context.set_details('Method not implemented!')
+        raise NotImplementedError('Method not implemented!')
+
+    def DeletePortConfiguration(self, request, context):
+        """Missing associated documentation comment in .proto file."""
+        context.set_code(grpc.StatusCode.UNIMPLEMENTED)
+        context.set_details('Method not implemented!')
+        raise NotImplementedError('Method not implemented!')
+
+    def RestartPorts(self, request, context):
+        """Missing associated documentation comment in .proto file."""
+        context.set_code(grpc.StatusCode.UNIMPLEMENTED)
+        context.set_details('Method not implemented!')
+        raise NotImplementedError('Method not implemented!')
+
+    def GetLAGConfiguration(self, request, context):
+        """Missing associated documentation comment in .proto file."""
+        context.set_code(grpc.StatusCode.UNIMPLEMENTED)
+        context.set_details('Method not implemented!')
+        raise NotImplementedError('Method not implemented!')
+
+    def AddLAG(self, request, context):
+        """Missing associated documentation comment in .proto file."""
+        context.set_code(grpc.StatusCode.UNIMPLEMENTED)
+        context.set_details('Method not implemented!')
+        raise NotImplementedError('Method not implemented!')
+
+    def UpdateLAG(self, request, context):
+        """Missing associated documentation comment in .proto file."""
+        context.set_code(grpc.StatusCode.UNIMPLEMENTED)
+        context.set_details('Method not implemented!')
+        raise NotImplementedError('Method not implemented!')
+
+    def DeleteLAG(self, request, context):
+        """Missing associated documentation comment in .proto file."""
+        context.set_code(grpc.StatusCode.UNIMPLEMENTED)
+        context.set_details('Method not implemented!')
+        raise NotImplementedError('Method not implemented!')
+
+    def GetLAGMember(self, request, context):
+        """Missing associated documentation comment in .proto file."""
+        context.set_code(grpc.StatusCode.UNIMPLEMENTED)
+        context.set_details('Method not implemented!')
+        raise NotImplementedError('Method not implemented!')
+
+    def UpdateLAGMember(self, request, context):
+        """Missing associated documentation comment in .proto file."""
+        context.set_code(grpc.StatusCode.UNIMPLEMENTED)
+        context.set_details('Method not implemented!')
+        raise NotImplementedError('Method not implemented!')
+
+    def GetTableEntries(self, request, context):
+        """Missing associated documentation comment in .proto file."""
+        context.set_code(grpc.StatusCode.UNIMPLEMENTED)
+        context.set_details('Method not implemented!')
+        raise NotImplementedError('Method not implemented!')
+
+    def AddTableEntries(self, request, context):
+        """Missing associated documentation comment in .proto file."""
+        context.set_code(grpc.StatusCode.UNIMPLEMENTED)
+        context.set_details('Method not implemented!')
+        raise NotImplementedError('Method not implemented!')
+
+    def UpdateTableEntries(self, request, context):
+        """Missing associated documentation comment in .proto file."""
+        context.set_code(grpc.StatusCode.UNIMPLEMENTED)
+        context.set_details('Method not implemented!')
+        raise NotImplementedError('Method not implemented!')
+
+    def DeleteTableEntries(self, request, context):
+        """Missing associated documentation comment in .proto file."""
+        context.set_code(grpc.StatusCode.UNIMPLEMENTED)
+        context.set_details('Method not implemented!')
+        raise NotImplementedError('Method not implemented!')
+
+
+def add_TIFControlCommunicatorServicer_to_server(servicer, server):
+    rpc_method_handlers = {
+            'GetLAGMemberState': grpc.unary_unary_rpc_method_handler(
+                    servicer.GetLAGMemberState,
+                    request_deserializer=til_dot_orchestrator__msg__pb2.TIFControlRequest.FromString,
+                    response_serializer=til_dot_orchestrator__msg__pb2.TIFControlResponse.SerializeToString,
+            ),
+            'ChangeLAGMemberState': grpc.unary_unary_rpc_method_handler(
+                    servicer.ChangeLAGMemberState,
+                    request_deserializer=til_dot_orchestrator__msg__pb2.TIFControlRequest.FromString,
+                    response_serializer=til_dot_orchestrator__msg__pb2.TIFControlResponse.SerializeToString,
+            ),
+            'GetPortConfiguration': grpc.unary_unary_rpc_method_handler(
+                    servicer.GetPortConfiguration,
+                    request_deserializer=til_dot_orchestrator__msg__pb2.TIFControlRequest.FromString,
+                    response_serializer=til_dot_orchestrator__msg__pb2.TIFControlResponse.SerializeToString,
+            ),
+            'UpdatePortConfiguration': grpc.unary_unary_rpc_method_handler(
+                    servicer.UpdatePortConfiguration,
+                    request_deserializer=til_dot_orchestrator__msg__pb2.TIFControlRequest.FromString,
+                    response_serializer=til_dot_orchestrator__msg__pb2.TIFControlResponse.SerializeToString,
+            ),
+            'DeletePortConfiguration': grpc.unary_unary_rpc_method_handler(
+                    servicer.DeletePortConfiguration,
+                    request_deserializer=til_dot_orchestrator__msg__pb2.TIFControlRequest.FromString,
+                    response_serializer=til_dot_orchestrator__msg__pb2.TIFControlResponse.SerializeToString,
+            ),
+            'RestartPorts': grpc.unary_unary_rpc_method_handler(
+                    servicer.RestartPorts,
+                    request_deserializer=til_dot_orchestrator__msg__pb2.TIFControlRequest.FromString,
+                    response_serializer=til_dot_orchestrator__msg__pb2.TIFControlResponse.SerializeToString,
+            ),
+            'GetLAGConfiguration': grpc.unary_unary_rpc_method_handler(
+                    servicer.GetLAGConfiguration,
+                    request_deserializer=til_dot_orchestrator__msg__pb2.TIFControlRequest.FromString,
+                    response_serializer=til_dot_orchestrator__msg__pb2.TIFControlResponse.SerializeToString,
+            ),
+            'AddLAG': grpc.unary_unary_rpc_method_handler(
+                    servicer.AddLAG,
+                    request_deserializer=til_dot_orchestrator__msg__pb2.TIFControlRequest.FromString,
+                    response_serializer=til_dot_orchestrator__msg__pb2.TIFControlResponse.SerializeToString,
+            ),
+            'UpdateLAG': grpc.unary_unary_rpc_method_handler(
+                    servicer.UpdateLAG,
+                    request_deserializer=til_dot_orchestrator__msg__pb2.TIFControlRequest.FromString,
+                    response_serializer=til_dot_orchestrator__msg__pb2.TIFControlResponse.SerializeToString,
+            ),
+            'DeleteLAG': grpc.unary_unary_rpc_method_handler(
+                    servicer.DeleteLAG,
+                    request_deserializer=til_dot_orchestrator__msg__pb2.TIFControlRequest.FromString,
+                    response_serializer=til_dot_orchestrator__msg__pb2.TIFControlResponse.SerializeToString,
+            ),
+            'GetLAGMember': grpc.unary_unary_rpc_method_handler(
+                    servicer.GetLAGMember,
+                    request_deserializer=til_dot_orchestrator__msg__pb2.TIFControlRequest.FromString,
+                    response_serializer=til_dot_orchestrator__msg__pb2.TIFControlResponse.SerializeToString,
+            ),
+            'UpdateLAGMember': grpc.unary_unary_rpc_method_handler(
+                    servicer.UpdateLAGMember,
+                    request_deserializer=til_dot_orchestrator__msg__pb2.TIFControlRequest.FromString,
+                    response_serializer=til_dot_orchestrator__msg__pb2.TIFControlResponse.SerializeToString,
+            ),
+            'GetTableEntries': grpc.unary_unary_rpc_method_handler(
+                    servicer.GetTableEntries,
+                    request_deserializer=til_dot_orchestrator__msg__pb2.TIFControlRequest.FromString,
+                    response_serializer=til_dot_orchestrator__msg__pb2.TIFControlResponse.SerializeToString,
+            ),
+            'AddTableEntries': grpc.unary_unary_rpc_method_handler(
+                    servicer.AddTableEntries,
+                    request_deserializer=til_dot_orchestrator__msg__pb2.TIFControlRequest.FromString,
+                    response_serializer=til_dot_orchestrator__msg__pb2.TIFControlResponse.SerializeToString,
+            ),
+            'UpdateTableEntries': grpc.unary_unary_rpc_method_handler(
+                    servicer.UpdateTableEntries,
+                    request_deserializer=til_dot_orchestrator__msg__pb2.TIFControlRequest.FromString,
+                    response_serializer=til_dot_orchestrator__msg__pb2.TIFControlResponse.SerializeToString,
+            ),
+            'DeleteTableEntries': grpc.unary_unary_rpc_method_handler(
+                    servicer.DeleteTableEntries,
+                    request_deserializer=til_dot_orchestrator__msg__pb2.TIFControlRequest.FromString,
+                    response_serializer=til_dot_orchestrator__msg__pb2.TIFControlResponse.SerializeToString,
+            ),
+    }
+    generic_handler = grpc.method_handlers_generic_handler(
+            'til.TIFControlCommunicator', rpc_method_handlers)
+    server.add_generic_rpc_handlers((generic_handler,))
+
+
+ # This class is part of an EXPERIMENTAL API.
+class TIFControlCommunicator(object):
+    """Missing associated documentation comment in .proto file."""
+
+    @staticmethod
+    def GetLAGMemberState(request,
+            target,
+            options=(),
+            channel_credentials=None,
+            call_credentials=None,
+            insecure=False,
+            compression=None,
+            wait_for_ready=None,
+            timeout=None,
+            metadata=None):
+        return grpc.experimental.unary_unary(request, target, '/til.TIFControlCommunicator/GetLAGMemberState',
+            til_dot_orchestrator__msg__pb2.TIFControlRequest.SerializeToString,
+            til_dot_orchestrator__msg__pb2.TIFControlResponse.FromString,
+            options, channel_credentials,
+            insecure, call_credentials, compression, wait_for_ready, timeout, metadata)
+
+    @staticmethod
+    def ChangeLAGMemberState(request,
+            target,
+            options=(),
+            channel_credentials=None,
+            call_credentials=None,
+            insecure=False,
+            compression=None,
+            wait_for_ready=None,
+            timeout=None,
+            metadata=None):
+        return grpc.experimental.unary_unary(request, target, '/til.TIFControlCommunicator/ChangeLAGMemberState',
+            til_dot_orchestrator__msg__pb2.TIFControlRequest.SerializeToString,
+            til_dot_orchestrator__msg__pb2.TIFControlResponse.FromString,
+            options, channel_credentials,
+            insecure, call_credentials, compression, wait_for_ready, timeout, metadata)
+
+    @staticmethod
+    def GetPortConfiguration(request,
+            target,
+            options=(),
+            channel_credentials=None,
+            call_credentials=None,
+            insecure=False,
+            compression=None,
+            wait_for_ready=None,
+            timeout=None,
+            metadata=None):
+        return grpc.experimental.unary_unary(request, target, '/til.TIFControlCommunicator/GetPortConfiguration',
+            til_dot_orchestrator__msg__pb2.TIFControlRequest.SerializeToString,
+            til_dot_orchestrator__msg__pb2.TIFControlResponse.FromString,
+            options, channel_credentials,
+            insecure, call_credentials, compression, wait_for_ready, timeout, metadata)
+
+    @staticmethod
+    def UpdatePortConfiguration(request,
+            target,
+            options=(),
+            channel_credentials=None,
+            call_credentials=None,
+            insecure=False,
+            compression=None,
+            wait_for_ready=None,
+            timeout=None,
+            metadata=None):
+        return grpc.experimental.unary_unary(request, target, '/til.TIFControlCommunicator/UpdatePortConfiguration',
+            til_dot_orchestrator__msg__pb2.TIFControlRequest.SerializeToString,
+            til_dot_orchestrator__msg__pb2.TIFControlResponse.FromString,
+            options, channel_credentials,
+            insecure, call_credentials, compression, wait_for_ready, timeout, metadata)
+
+    @staticmethod
+    def DeletePortConfiguration(request,
+            target,
+            options=(),
+            channel_credentials=None,
+            call_credentials=None,
+            insecure=False,
+            compression=None,
+            wait_for_ready=None,
+            timeout=None,
+            metadata=None):
+        return grpc.experimental.unary_unary(request, target, '/til.TIFControlCommunicator/DeletePortConfiguration',
+            til_dot_orchestrator__msg__pb2.TIFControlRequest.SerializeToString,
+            til_dot_orchestrator__msg__pb2.TIFControlResponse.FromString,
+            options, channel_credentials,
+            insecure, call_credentials, compression, wait_for_ready, timeout, metadata)
+
+    @staticmethod
+    def RestartPorts(request,
+            target,
+            options=(),
+            channel_credentials=None,
+            call_credentials=None,
+            insecure=False,
+            compression=None,
+            wait_for_ready=None,
+            timeout=None,
+            metadata=None):
+        return grpc.experimental.unary_unary(request, target, '/til.TIFControlCommunicator/RestartPorts',
+            til_dot_orchestrator__msg__pb2.TIFControlRequest.SerializeToString,
+            til_dot_orchestrator__msg__pb2.TIFControlResponse.FromString,
+            options, channel_credentials,
+            insecure, call_credentials, compression, wait_for_ready, timeout, metadata)
+
+    @staticmethod
+    def GetLAGConfiguration(request,
+            target,
+            options=(),
+            channel_credentials=None,
+            call_credentials=None,
+            insecure=False,
+            compression=None,
+            wait_for_ready=None,
+            timeout=None,
+            metadata=None):
+        return grpc.experimental.unary_unary(request, target, '/til.TIFControlCommunicator/GetLAGConfiguration',
+            til_dot_orchestrator__msg__pb2.TIFControlRequest.SerializeToString,
+            til_dot_orchestrator__msg__pb2.TIFControlResponse.FromString,
+            options, channel_credentials,
+            insecure, call_credentials, compression, wait_for_ready, timeout, metadata)
+
+    @staticmethod
+    def AddLAG(request,
+            target,
+            options=(),
+            channel_credentials=None,
+            call_credentials=None,
+            insecure=False,
+            compression=None,
+            wait_for_ready=None,
+            timeout=None,
+            metadata=None):
+        return grpc.experimental.unary_unary(request, target, '/til.TIFControlCommunicator/AddLAG',
+            til_dot_orchestrator__msg__pb2.TIFControlRequest.SerializeToString,
+            til_dot_orchestrator__msg__pb2.TIFControlResponse.FromString,
+            options, channel_credentials,
+            insecure, call_credentials, compression, wait_for_ready, timeout, metadata)
+
+    @staticmethod
+    def UpdateLAG(request,
+            target,
+            options=(),
+            channel_credentials=None,
+            call_credentials=None,
+            insecure=False,
+            compression=None,
+            wait_for_ready=None,
+            timeout=None,
+            metadata=None):
+        return grpc.experimental.unary_unary(request, target, '/til.TIFControlCommunicator/UpdateLAG',
+            til_dot_orchestrator__msg__pb2.TIFControlRequest.SerializeToString,
+            til_dot_orchestrator__msg__pb2.TIFControlResponse.FromString,
+            options, channel_credentials,
+            insecure, call_credentials, compression, wait_for_ready, timeout, metadata)
+
+    @staticmethod
+    def DeleteLAG(request,
+            target,
+            options=(),
+            channel_credentials=None,
+            call_credentials=None,
+            insecure=False,
+            compression=None,
+            wait_for_ready=None,
+            timeout=None,
+            metadata=None):
+        return grpc.experimental.unary_unary(request, target, '/til.TIFControlCommunicator/DeleteLAG',
+            til_dot_orchestrator__msg__pb2.TIFControlRequest.SerializeToString,
+            til_dot_orchestrator__msg__pb2.TIFControlResponse.FromString,
+            options, channel_credentials,
+            insecure, call_credentials, compression, wait_for_ready, timeout, metadata)
+
+    @staticmethod
+    def GetLAGMember(request,
+            target,
+            options=(),
+            channel_credentials=None,
+            call_credentials=None,
+            insecure=False,
+            compression=None,
+            wait_for_ready=None,
+            timeout=None,
+            metadata=None):
+        return grpc.experimental.unary_unary(request, target, '/til.TIFControlCommunicator/GetLAGMember',
+            til_dot_orchestrator__msg__pb2.TIFControlRequest.SerializeToString,
+            til_dot_orchestrator__msg__pb2.TIFControlResponse.FromString,
+            options, channel_credentials,
+            insecure, call_credentials, compression, wait_for_ready, timeout, metadata)
+
+    @staticmethod
+    def UpdateLAGMember(request,
+            target,
+            options=(),
+            channel_credentials=None,
+            call_credentials=None,
+            insecure=False,
+            compression=None,
+            wait_for_ready=None,
+            timeout=None,
+            metadata=None):
+        return grpc.experimental.unary_unary(request, target, '/til.TIFControlCommunicator/UpdateLAGMember',
+            til_dot_orchestrator__msg__pb2.TIFControlRequest.SerializeToString,
+            til_dot_orchestrator__msg__pb2.TIFControlResponse.FromString,
+            options, channel_credentials,
+            insecure, call_credentials, compression, wait_for_ready, timeout, metadata)
+
+    @staticmethod
+    def GetTableEntries(request,
+            target,
+            options=(),
+            channel_credentials=None,
+            call_credentials=None,
+            insecure=False,
+            compression=None,
+            wait_for_ready=None,
+            timeout=None,
+            metadata=None):
+        return grpc.experimental.unary_unary(request, target, '/til.TIFControlCommunicator/GetTableEntries',
+            til_dot_orchestrator__msg__pb2.TIFControlRequest.SerializeToString,
+            til_dot_orchestrator__msg__pb2.TIFControlResponse.FromString,
+            options, channel_credentials,
+            insecure, call_credentials, compression, wait_for_ready, timeout, metadata)
+
+    @staticmethod
+    def AddTableEntries(request,
+            target,
+            options=(),
+            channel_credentials=None,
+            call_credentials=None,
+            insecure=False,
+            compression=None,
+            wait_for_ready=None,
+            timeout=None,
+            metadata=None):
+        return grpc.experimental.unary_unary(request, target, '/til.TIFControlCommunicator/AddTableEntries',
+            til_dot_orchestrator__msg__pb2.TIFControlRequest.SerializeToString,
+            til_dot_orchestrator__msg__pb2.TIFControlResponse.FromString,
+            options, channel_credentials,
+            insecure, call_credentials, compression, wait_for_ready, timeout, metadata)
+
+    @staticmethod
+    def UpdateTableEntries(request,
+            target,
+            options=(),
+            channel_credentials=None,
+            call_credentials=None,
+            insecure=False,
+            compression=None,
+            wait_for_ready=None,
+            timeout=None,
+            metadata=None):
+        return grpc.experimental.unary_unary(request, target, '/til.TIFControlCommunicator/UpdateTableEntries',
+            til_dot_orchestrator__msg__pb2.TIFControlRequest.SerializeToString,
+            til_dot_orchestrator__msg__pb2.TIFControlResponse.FromString,
+            options, channel_credentials,
+            insecure, call_credentials, compression, wait_for_ready, timeout, metadata)
+
+    @staticmethod
+    def DeleteTableEntries(request,
+            target,
+            options=(),
+            channel_credentials=None,
+            call_credentials=None,
+            insecure=False,
+            compression=None,
+            wait_for_ready=None,
+            timeout=None,
+            metadata=None):
+        return grpc.experimental.unary_unary(request, target, '/til.TIFControlCommunicator/DeleteTableEntries',
+            til_dot_orchestrator__msg__pb2.TIFControlRequest.SerializeToString,
+            til_dot_orchestrator__msg__pb2.TIFControlResponse.FromString,
+            options, channel_credentials,
+            insecure, call_credentials, compression, wait_for_ready, timeout, metadata)

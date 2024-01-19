@@ -1,0 +1,24 @@
+syntax = "proto3";
+
+package til;
+
+
+message DpPort {
+    uint32 portId = 1;
+    uint32 slotId = 2;
+    bool active = 3;
+    string speed = 4;
+    string fec = 5;
+    uint32 an = 6;
+}
+  
+message Lag {
+    uint32 id = 1;
+    uint32 memberbase = 2;
+    repeated DpPort dp_ports = 3;
+}
+
+message RoutingTableConfiguration {
+    string key = 1; // could also be an IP address
+    uint32 nextHopId = 2;
+}

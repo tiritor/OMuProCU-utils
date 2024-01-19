@@ -1,13 +1,13 @@
 # OMuProCU utils
 
-This repository contains the python package for OMuProCU utilities which was needed for the paper ```Low Impact Tenant Code Updates on Multi-tenant Programmable Switches```.
+This repository contains the python package for OMuProCU utilities which was needed for the papers [`Low Impact Tenant Code Updates on Multi-tenant Programmable Switches`](https://ieeexplore.ieee.org/abstract/document/10327866) and ```Orchestrating Multi-Tenant Code Updates Across Multiple Programmable Switches``.
 
-The core package can be found [here]() 
+The core package can be found [here](https://github.com/tiritor/OMuProCU-core) 
 
 The package contains the following modules:
 
 - Protobuf Message Descritions for OMuProCU (including [Open-Tofino BarefootRuntime Protobuf](https://github.com/barefootnetworks/Open-Tofino))
-- Validator for TDC
+- Validator for TDC and MDTDC
 - Persistor for OMuProCU states
 
 Also, a [OMuProCU reference client](src/orchestrator_utils/orchestrator_client.py) is implemented for the API, which can be used for deployment submissions to the proposed OMuProCU.

@@ -7,8 +7,12 @@ import re
 import yaml
 import logging
 
+import grpc
 import kubernetes_validate
 
+from .device_categories import InfrastructureDeviceCategories
+from .til.md_orchestrator_msg_pb2_grpc import TopologyUpdateCommunicatorStub
+from .til.md_orchestrator_msg_pb2 import TopologyUpdateRequest, TopologyUpdateResponse
 from .logger.logger import init_logger
 from .tools.accelerator_type import AcceleratorType 
 from .tools.countermeasure_action import CountermeasureAction
@@ -21,7 +25,14 @@ class ValidationException(Exception):
     def __str__(self):
         return "ValidationException with %s" % self.msg
 
+class MDTDCValidationException(ValidationException):
 
+    def __init__(self, msg):
+        self.msg = msg
+
+    def __str__(self):
+        return "MDTDCValidationException with %s" % self.msg
+    
 class TDCValidationException(ValidationException):
     
     def __init__(self, msg):
@@ -136,6 +147,7 @@ class TDCValidator(Validator):
         self.start_tcaport = start_tcaport
         self.path = path
         self.tenant_security_config = None
+        self.device_name = "default"
         with open("conf/tenant_security_config.json", "r") as f:
             self.tenant_security_config = json.load(f)
         self.extern_blacklist = None
@@ -153,8 +165,10 @@ class TDCValidator(Validator):
         """
         tdc = yaml.safe_load(raw_tdc)
         self.tdc = tdc
-        self.tdc_id = tdc["id"]
-        self.tdc_name = tdc["name"]
+        if self.tdc_id is None or self.tdc_id == -1:
+            self.tdc_id = tdc["id"]
+        if self.tdc_name is None or self.tdc_name == "":
+            self.tdc_name = tdc["name"]
         self.tcd = tdc["TCD"]
         self.til = tdc["TIL"]
         self.inc = tdc["INC"]
@@ -175,9 +189,9 @@ class TDCValidator(Validator):
         """
         with open("conf/tenant_security_config.json", "w") as f:
             f.write("")
-            json.dump(self.tenant_security_config, f)
+            json.dump(self.tenant_security_config, f, indent=2)
 
-    def validate(self, deployment = None, path = None, update_request = False):
+    def validate(self, deployment = None, path = None, update_request = False, delete_request = False):
         """
         Validates the TDC parts. 
         If deployment AND path is set, deployment is prefered!
@@ -202,9 +216,9 @@ class TDCValidator(Validator):
                 raise TDCValidationException("Invalid ID: ID must be greater than 0!")
             else: 
                 self.logger.debug("TDC ID valid!")
-            self.validate_tcd(update_request)
-            self.validate_til(update_request)
-            self.validate_inc(update_request)
+            self.validate_tcd(update_request, delete_request)
+            self.validate_til(update_request, delete_request)
+            self.validate_inc(update_request, delete_request)
         except ValidationException as e:
             self.logger.error(e.__str__())
             return False
@@ -214,8 +228,7 @@ class TDCValidator(Validator):
         self.logger.info("TDC validated!")
         return True
 
-    
-    def validate_unique_mainIngressName(self, mainIngressName, update_request = False):
+    def validate_unique_mainIngressName(self, mainIngressName, update_request = False, delete_request = False):
         """
         Check if mainIngressName provided in TDC is unique for the TIF.
         
@@ -227,16 +240,18 @@ class TDCValidator(Validator):
             If this is true, it can exist for the specified tenant and should be checked, if it is only updating its TDC.
         """
         for tenant_id in self.tenant_security_config.keys():
-            for existing_mainIngressName in self.tenant_security_config[tenant_id]["mainIngressNames"]:
+            for existing_mainIngressName in self.tenant_security_config[tenant_id]["devices"][self.device_name]["mainIngressNames"]:
                 if mainIngressName == existing_mainIngressName:
-                    if str(tenant_id) == str(self.tdc_id) and update_request:
+                    if str(tenant_id) == str(self.tdc_id) and (update_request or delete_request):
                         return True
                     self.logger.error("MainIngressName {} is not unique since it is already used!".format(mainIngressName))
                     return False
+                elif delete_request :
+                    self.logger.error("MainIngressName {} does not exist and cannot validated!".format(mainIngressName))
+                    return False
         return True
 
-
-    def validate_tcd(self, update_request = False):
+    def validate_tcd(self, update_request = False, delete_request = False):
         """
         This function validates the TCD.
 
@@ -316,9 +331,9 @@ class TDCValidator(Validator):
         except TypeError as e:
             self.logger.error(log_method + e.__str__())
         
-        self.logger.info("TCD validated!")
+        self.logger.debug("TCD validated!")
     
-    def validate_til(self, update_request = False):
+    def validate_til(self, update_request = False, delete_request = False):
         """
         Validate Tenant Isolation Logic (TIL).
 
@@ -556,7 +571,7 @@ class TDCValidator(Validator):
             validate_runtimeRules(self.til["runtimeRules"])
         except TypeError as e:
             self.logger.error("TypeError in " + log_method + e.__str__())
-        self.logger.info("TIL validated!")
+        self.logger.debug("TIL validated!")
 
     def generate_blacklist_for_mainIngressNames(self):
         """
@@ -565,11 +580,10 @@ class TDCValidator(Validator):
         blockedMainIngressNames = []
         for tenantId, data in self.tenant_security_config.items():
             if int(tenantId) != self.tdc_id:
-                blockedMainIngressNames.extend(data["mainIngressNames"])
+                blockedMainIngressNames.extend(data["devices"][self.device_name]["mainIngressNames"])
         return blockedMainIngressNames
 
-
-    def validate_inc(self, update_request = False):
+    def validate_inc(self, update_request = False, delete_request = False):
         """
         Validate In-Network Code which is an Offloaded Tenant Function (OTF)
 
@@ -664,10 +678,10 @@ class TDCValidator(Validator):
             return True
 
         try:
-            if not self.validate_unique_mainIngressName(self.inc["mainIngressName"], update_request):
+            if not self.validate_unique_mainIngressName(self.inc["mainIngressName"], update_request, delete_request):
                 raise INCIngressNameException("Name of Main Ingress is not unique!")
-            if self.inc["mainIngressName"] not in self.tenant_security_config[str(self.tdc_id)]["mainIngressNames"]: 
-                self.tenant_security_config[str(self.tdc_id)]["mainIngressNames"].append(self.inc["mainIngressName"])
+            if self.inc["mainIngressName"] not in self.tenant_security_config[str(self.tdc_id)]["devices"][self.device_name]["mainIngressNames"] and not delete_request: 
+                self.tenant_security_config[str(self.tdc_id)]["devices"][self.device_name]["mainIngressNames"].append(self.inc["mainIngressName"])
             blockedList = self.generate_blacklist_for_mainIngressNames()
             check_include_access_violation(self.inc["p4Code"])
             check_extern_access_violation(self.inc["p4Code"], self.extern_blacklist[self.tcd["acceleratorType"]])
@@ -678,11 +692,114 @@ class TDCValidator(Validator):
         except TypeError as e:
             self.logger.error(log_prefix + e.__str__())
         except Exception as e:
-            if self.inc["mainIngressName"] in self.tenant_security_config[str(self.tdc_id)]["mainIngressNames"]:
-                self.tenant_security_config[str(self.tdc_id)]["mainIngressNames"].remove(self.inc["mainIngressName"])
+            if self.inc["mainIngressName"] in self.tenant_security_config[str(self.tdc_id)]["devices"][self.device_name]["mainIngressNames"]:
+                self.tenant_security_config[str(self.tdc_id)]["devices"][self.device_name]["mainIngressNames"].remove(self.inc["mainIngressName"])
                 self._save_tenant_security_config()
             raise e
-        self.logger.info("INC validated!")
+        self.logger.debug("INC validated!")
+
+
+class MDTDCValidator(TDCValidator):
+    """
+    docstring
+    """
+
+    def load_mdtdc(self, raw_mdtdc):
+        """
+        docstring
+        """
+        mdtdc = yaml.safe_load(raw_mdtdc)
+        self.mdtdc = mdtdc
+        self.mdtdc_id = self.tdc_id = mdtdc["id"]
+        self.mdtdc_name = self.tdc_name = mdtdc["name"]
+        # self.tcd = mdtdc["TCD"]
+        # self.til = mdtdc["TIL"]
+        # self.inc = mdtdc["INC"]
+        # self.logger.debug(self.tcd)
+        # self.logger.debug(self.til)
+        # self.logger.debug(self.inc)
+    
+    def validate_device_name(self, device_name, topology_update_address = "localhost:49009"):
+        """
+        docstring
+        """
+        with grpc.insecure_channel(topology_update_address) as channel:
+            stub = TopologyUpdateCommunicatorStub(channel)
+            resp : TopologyUpdateResponse = stub.GetAllDeviceNodes(
+                TopologyUpdateRequest()
+            )
+            for node in resp.topologyUpdate.nodes:
+                if node.nodeName == device_name:
+                    return True
+            return False
+        
+    def _get_device_names_for_category(self, category, topology_update_address = "localhost:49009"):
+        """
+        docstring
+        """
+        resp = None
+        with grpc.insecure_channel(topology_update_address) as channel:
+            stub = TopologyUpdateCommunicatorStub(channel)
+            if category == InfrastructureDeviceCategories.EDGE_DEVICE.value:
+                resp : TopologyUpdateResponse = stub.GetEdgeNodes(
+                    TopologyUpdateRequest()
+                )
+            elif category == InfrastructureDeviceCategories.DATACENTER_DEVICE.value:
+                resp : TopologyUpdateResponse = stub.GetEdgeNodes(
+                    TopologyUpdateRequest()
+                )
+            else: 
+                raise ValidationException("Given type is no valid infrastructure device category or in the endpoint device category")
+        return (node.nodeName for node in resp.topologyUpdate.nodes)
+            
+    def validate_device_category(self, device_category):
+        """
+        docstring
+        """
+        values = tuple(item.value for item in InfrastructureDeviceCategories)
+        return device_category in values
+
+    def validate(self, deployment=None, path=None, update_request=False, delete_request=False):
+        if deployment is None and path is not None:
+            with open(path) as f:
+                self.load_mdtdc(f)
+        elif deployment is not None : 
+            self.load_mdtdc(deployment)
+        try:
+            self._load_tenant_security_config() # Check for updates from the orchestrator
+            if self.mdtdc_id < 1:
+                raise MDTDCValidationException("Invalid ID: ID must be greater than 0!")
+            else: 
+                self.logger.debug("TDC ID valid!")
+            if not isinstance(self.mdtdc["TDCs"], list):
+                raise MDTDCValidationException("TDCs are not given as a list!")
+            tdc : dict = None
+            for index, tdc in enumerate(self.mdtdc["TDCs"]):
+                device_names = ()
+                # Device Name has higher priority than its category.
+                if "deviceName" in tdc.keys():
+                    self.validate_device_name(tdc["deviceName"])
+                    device_names += (tdc["deviceName"],)
+                elif "deviceCategory" in tdc.keys():
+                    self.validate_device_category(tdc["deviceCategory"])                    
+                    device_names += self._get_device_names_for_category(tdc["deviceCategory"])
+                else:
+                    raise MDTDCValidationException("Neither deviceName nor deviceCategory is defined!")
+                for device_name in device_names:
+                    self.device_name = device_name
+                    if not super().validate(str(tdc["manifest"]), update_request=update_request, delete_request=delete_request):
+                        tdc_identifier = "deviceName" if "deviceName" in tdc.keys() else "deviceCategory"
+                        raise MDTDCValidationException("TDC for {} {} is not valid!".format(tdc_identifier, tdc[tdc_identifier]))
+                    else:
+                        self.mdtdc["TDCs"][index]["manifest"]["id"] = self.mdtdc_id
+        except ValidationException as e:
+            self.logger.error(e.__str__())
+            return False
+        except TypeError as e:
+            self.logger.error(e.__str__())
+            return False
+        self.logger.info("MDTDC validated!")
+        return True
 
 
 if __name__ == "__main__":

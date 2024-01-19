@@ -41,6 +41,16 @@ class DeploymentCommunicatorStub(object):
                 request_serializer=til_dot_til__msg__pb2.DeploymentRequest.SerializeToString,
                 response_deserializer=til_dot_til__msg__pb2.DeploymentResponse.FromString,
                 )
+        self.CheckHealth = channel.unary_unary(
+                '/til.DeploymentCommunicator/CheckHealth',
+                request_serializer=til_dot_til__msg__pb2.DeploymentRequest.SerializeToString,
+                response_deserializer=til_dot_til__msg__pb2.DeploymentResponse.FromString,
+                )
+        self.GetDeploymentMonitorStatus = channel.unary_unary(
+                '/til.DeploymentCommunicator/GetDeploymentMonitorStatus',
+                request_serializer=til_dot_til__msg__pb2.DeploymentRequest.SerializeToString,
+                response_deserializer=til_dot_til__msg__pb2.DeploymentResponse.FromString,
+                )
 
 
 class DeploymentCommunicatorServicer(object):
@@ -78,6 +88,18 @@ class DeploymentCommunicatorServicer(object):
         context.set_details('Method not implemented!')
         raise NotImplementedError('Method not implemented!')
 
+    def CheckHealth(self, request, context):
+        """Missing associated documentation comment in .proto file."""
+        context.set_code(grpc.StatusCode.UNIMPLEMENTED)
+        context.set_details('Method not implemented!')
+        raise NotImplementedError('Method not implemented!')
+
+    def GetDeploymentMonitorStatus(self, request, context):
+        """Missing associated documentation comment in .proto file."""
+        context.set_code(grpc.StatusCode.UNIMPLEMENTED)
+        context.set_details('Method not implemented!')
+        raise NotImplementedError('Method not implemented!')
+
 
 def add_DeploymentCommunicatorServicer_to_server(servicer, server):
     rpc_method_handlers = {
@@ -103,6 +125,16 @@ def add_DeploymentCommunicatorServicer_to_server(servicer, server):
             ),
             'RestartSchedulerLoop': grpc.unary_unary_rpc_method_handler(
                     servicer.RestartSchedulerLoop,
+                    request_deserializer=til_dot_til__msg__pb2.DeploymentRequest.FromString,
+                    response_serializer=til_dot_til__msg__pb2.DeploymentResponse.SerializeToString,
+            ),
+            'CheckHealth': grpc.unary_unary_rpc_method_handler(
+                    servicer.CheckHealth,
+                    request_deserializer=til_dot_til__msg__pb2.DeploymentRequest.FromString,
+                    response_serializer=til_dot_til__msg__pb2.DeploymentResponse.SerializeToString,
+            ),
+            'GetDeploymentMonitorStatus': grpc.unary_unary_rpc_method_handler(
+                    servicer.GetDeploymentMonitorStatus,
                     request_deserializer=til_dot_til__msg__pb2.DeploymentRequest.FromString,
                     response_serializer=til_dot_til__msg__pb2.DeploymentResponse.SerializeToString,
             ),
@@ -198,6 +230,40 @@ class DeploymentCommunicator(object):
             timeout=None,
             metadata=None):
         return grpc.experimental.unary_unary(request, target, '/til.DeploymentCommunicator/RestartSchedulerLoop',
+            til_dot_til__msg__pb2.DeploymentRequest.SerializeToString,
+            til_dot_til__msg__pb2.DeploymentResponse.FromString,
+            options, channel_credentials,
+            insecure, call_credentials, compression, wait_for_ready, timeout, metadata)
+
+    @staticmethod
+    def CheckHealth(request,
+            target,
+            options=(),
+            channel_credentials=None,
+            call_credentials=None,
+            insecure=False,
+            compression=None,
+            wait_for_ready=None,
+            timeout=None,
+            metadata=None):
+        return grpc.experimental.unary_unary(request, target, '/til.DeploymentCommunicator/CheckHealth',
+            til_dot_til__msg__pb2.DeploymentRequest.SerializeToString,
+            til_dot_til__msg__pb2.DeploymentResponse.FromString,
+            options, channel_credentials,
+            insecure, call_credentials, compression, wait_for_ready, timeout, metadata)
+
+    @staticmethod
+    def GetDeploymentMonitorStatus(request,
+            target,
+            options=(),
+            channel_credentials=None,
+            call_credentials=None,
+            insecure=False,
+            compression=None,
+            wait_for_ready=None,
+            timeout=None,
+            metadata=None):
+        return grpc.experimental.unary_unary(request, target, '/til.DeploymentCommunicator/GetDeploymentMonitorStatus',
             til_dot_til__msg__pb2.DeploymentRequest.SerializeToString,
             til_dot_til__msg__pb2.DeploymentResponse.FromString,
             options, channel_credentials,

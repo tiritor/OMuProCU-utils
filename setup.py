@@ -26,7 +26,7 @@ class my_install(install):
 
 setup(name='orchestrator_utils',
 version='0.2',
-description='Testing installation of Package',
+description='OMuProCU Utility Package',
 url='#',
 author='Timo Geier',
 author_email='timo.geier@cs.hs-fulda.de',
