@@ -5,6 +5,7 @@ package til;
 
 import "til/til_msg.proto";
 import "til/tif_control.proto";
+import "til/orchestrator_msg.proto";
 
 enum OrchestratorHealthState {
     ORCHESTRATOR_HEALTH_STATE_UNSPECIFIED = 0;
@@ -47,9 +48,31 @@ service TopologyUpdateCommunicator {
     // arp table host entries
 }
 
+service MDRulesUpdaterCommunicator {
+    rpc GetRules(MDRulesUpdateRequest) returns (MDRulesUpdateResponse);
+    rpc GetRule(MDRulesUpdateRequest) returns (MDRulesUpdateResponse);
+    rpc CreateRule(MDRulesUpdateRequest) returns (MDRulesUpdateResponse);
+    rpc UpdateRule(MDRulesUpdateRequest) returns (MDRulesUpdateResponse);
+    rpc DeleteRule(MDRulesUpdateRequest) returns (MDRulesUpdateResponse);
+    rpc CleanupRules(MDRulesUpdateRequest) returns (MDRulesUpdateResponse);
+    rpc CheckHealth(MDRulesUpdateRequest) returns (MDRulesUpdateResponse);
+
+}
+
+message MDRulesUpdateRequest {
+    repeated string infrastructureDeviceNames = 1;
+    repeated TIFControlRequest tifControlRequests = 2;
+}
+
+message MDRulesUpdateResponse {
+    uint32 status = 1;
+    string message = 2;
+    repeated string infrastructureDeviceNames = 3;
+    repeated TIFControlResponse tifControlResponse = 4;
+}
 
 message MDDeploymentMessage {
-    string infrastructure_device_name = 1;
+    string infrastructureDeviceNames = 1;
     string infrastructure_device_category = 2;
     DeploymentMessage deploymentMessage = 3;
 }

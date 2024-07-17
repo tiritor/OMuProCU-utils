@@ -726,3 +726,262 @@ class TopologyUpdateCommunicator(object):
             til_dot_md__orchestrator__msg__pb2.TopologyUpdateResponse.FromString,
             options, channel_credentials,
             insecure, call_credentials, compression, wait_for_ready, timeout, metadata)
+
+
+class MDRulesUpdaterCommunicatorStub(object):
+    """Missing associated documentation comment in .proto file."""
+
+    def __init__(self, channel):
+        """Constructor.
+
+        Args:
+            channel: A grpc.Channel.
+        """
+        self.GetRules = channel.unary_unary(
+                '/til.MDRulesUpdaterCommunicator/GetRules',
+                request_serializer=til_dot_md__orchestrator__msg__pb2.MDRulesUpdateRequest.SerializeToString,
+                response_deserializer=til_dot_md__orchestrator__msg__pb2.MDRulesUpdateResponse.FromString,
+                )
+        self.GetRule = channel.unary_unary(
+                '/til.MDRulesUpdaterCommunicator/GetRule',
+                request_serializer=til_dot_md__orchestrator__msg__pb2.MDRulesUpdateRequest.SerializeToString,
+                response_deserializer=til_dot_md__orchestrator__msg__pb2.MDRulesUpdateResponse.FromString,
+                )
+        self.CreateRule = channel.unary_unary(
+                '/til.MDRulesUpdaterCommunicator/CreateRule',
+                request_serializer=til_dot_md__orchestrator__msg__pb2.MDRulesUpdateRequest.SerializeToString,
+                response_deserializer=til_dot_md__orchestrator__msg__pb2.MDRulesUpdateResponse.FromString,
+                )
+        self.UpdateRule = channel.unary_unary(
+                '/til.MDRulesUpdaterCommunicator/UpdateRule',
+                request_serializer=til_dot_md__orchestrator__msg__pb2.MDRulesUpdateRequest.SerializeToString,
+                response_deserializer=til_dot_md__orchestrator__msg__pb2.MDRulesUpdateResponse.FromString,
+                )
+        self.DeleteRule = channel.unary_unary(
+                '/til.MDRulesUpdaterCommunicator/DeleteRule',
+                request_serializer=til_dot_md__orchestrator__msg__pb2.MDRulesUpdateRequest.SerializeToString,
+                response_deserializer=til_dot_md__orchestrator__msg__pb2.MDRulesUpdateResponse.FromString,
+                )
+        self.CleanupRules = channel.unary_unary(
+                '/til.MDRulesUpdaterCommunicator/CleanupRules',
+                request_serializer=til_dot_md__orchestrator__msg__pb2.MDRulesUpdateRequest.SerializeToString,
+                response_deserializer=til_dot_md__orchestrator__msg__pb2.MDRulesUpdateResponse.FromString,
+                )
+        self.CheckHealth = channel.unary_unary(
+                '/til.MDRulesUpdaterCommunicator/CheckHealth',
+                request_serializer=til_dot_md__orchestrator__msg__pb2.MDRulesUpdateRequest.SerializeToString,
+                response_deserializer=til_dot_md__orchestrator__msg__pb2.MDRulesUpdateResponse.FromString,
+                )
+
+
+class MDRulesUpdaterCommunicatorServicer(object):
+    """Missing associated documentation comment in .proto file."""
+
+    def GetRules(self, request, context):
+        """Missing associated documentation comment in .proto file."""
+        context.set_code(grpc.StatusCode.UNIMPLEMENTED)
+        context.set_details('Method not implemented!')
+        raise NotImplementedError('Method not implemented!')
+
+    def GetRule(self, request, context):
+        """Missing associated documentation comment in .proto file."""
+        context.set_code(grpc.StatusCode.UNIMPLEMENTED)
+        context.set_details('Method not implemented!')
+        raise NotImplementedError('Method not implemented!')
+
+    def CreateRule(self, request, context):
+        """Missing associated documentation comment in .proto file."""
+        context.set_code(grpc.StatusCode.UNIMPLEMENTED)
+        context.set_details('Method not implemented!')
+        raise NotImplementedError('Method not implemented!')
+
+    def UpdateRule(self, request, context):
+        """Missing associated documentation comment in .proto file."""
+        context.set_code(grpc.StatusCode.UNIMPLEMENTED)
+        context.set_details('Method not implemented!')
+        raise NotImplementedError('Method not implemented!')
+
+    def DeleteRule(self, request, context):
+        """Missing associated documentation comment in .proto file."""
+        context.set_code(grpc.StatusCode.UNIMPLEMENTED)
+        context.set_details('Method not implemented!')
+        raise NotImplementedError('Method not implemented!')
+
+    def CleanupRules(self, request, context):
+        """Missing associated documentation comment in .proto file."""
+        context.set_code(grpc.StatusCode.UNIMPLEMENTED)
+        context.set_details('Method not implemented!')
+        raise NotImplementedError('Method not implemented!')
+
+    def CheckHealth(self, request, context):
+        """Missing associated documentation comment in .proto file."""
+        context.set_code(grpc.StatusCode.UNIMPLEMENTED)
+        context.set_details('Method not implemented!')
+        raise NotImplementedError('Method not implemented!')
+
+
+def add_MDRulesUpdaterCommunicatorServicer_to_server(servicer, server):
+    rpc_method_handlers = {
+            'GetRules': grpc.unary_unary_rpc_method_handler(
+                    servicer.GetRules,
+                    request_deserializer=til_dot_md__orchestrator__msg__pb2.MDRulesUpdateRequest.FromString,
+                    response_serializer=til_dot_md__orchestrator__msg__pb2.MDRulesUpdateResponse.SerializeToString,
+            ),
+            'GetRule': grpc.unary_unary_rpc_method_handler(
+                    servicer.GetRule,
+                    request_deserializer=til_dot_md__orchestrator__msg__pb2.MDRulesUpdateRequest.FromString,
+                    response_serializer=til_dot_md__orchestrator__msg__pb2.MDRulesUpdateResponse.SerializeToString,
+            ),
+            'CreateRule': grpc.unary_unary_rpc_method_handler(
+                    servicer.CreateRule,
+                    request_deserializer=til_dot_md__orchestrator__msg__pb2.MDRulesUpdateRequest.FromString,
+                    response_serializer=til_dot_md__orchestrator__msg__pb2.MDRulesUpdateResponse.SerializeToString,
+            ),
+            'UpdateRule': grpc.unary_unary_rpc_method_handler(
+                    servicer.UpdateRule,
+                    request_deserializer=til_dot_md__orchestrator__msg__pb2.MDRulesUpdateRequest.FromString,
+                    response_serializer=til_dot_md__orchestrator__msg__pb2.MDRulesUpdateResponse.SerializeToString,
+            ),
+            'DeleteRule': grpc.unary_unary_rpc_method_handler(
+                    servicer.DeleteRule,
+                    request_deserializer=til_dot_md__orchestrator__msg__pb2.MDRulesUpdateRequest.FromString,
+                    response_serializer=til_dot_md__orchestrator__msg__pb2.MDRulesUpdateResponse.SerializeToString,
+            ),
+            'CleanupRules': grpc.unary_unary_rpc_method_handler(
+                    servicer.CleanupRules,
+                    request_deserializer=til_dot_md__orchestrator__msg__pb2.MDRulesUpdateRequest.FromString,
+                    response_serializer=til_dot_md__orchestrator__msg__pb2.MDRulesUpdateResponse.SerializeToString,
+            ),
+            'CheckHealth': grpc.unary_unary_rpc_method_handler(
+                    servicer.CheckHealth,
+                    request_deserializer=til_dot_md__orchestrator__msg__pb2.MDRulesUpdateRequest.FromString,
+                    response_serializer=til_dot_md__orchestrator__msg__pb2.MDRulesUpdateResponse.SerializeToString,
+            ),
+    }
+    generic_handler = grpc.method_handlers_generic_handler(
+            'til.MDRulesUpdaterCommunicator', rpc_method_handlers)
+    server.add_generic_rpc_handlers((generic_handler,))
+
+
+ # This class is part of an EXPERIMENTAL API.
+class MDRulesUpdaterCommunicator(object):
+    """Missing associated documentation comment in .proto file."""
+
+    @staticmethod
+    def GetRules(request,
+            target,
+            options=(),
+            channel_credentials=None,
+            call_credentials=None,
+            insecure=False,
+            compression=None,
+            wait_for_ready=None,
+            timeout=None,
+            metadata=None):
+        return grpc.experimental.unary_unary(request, target, '/til.MDRulesUpdaterCommunicator/GetRules',
+            til_dot_md__orchestrator__msg__pb2.MDRulesUpdateRequest.SerializeToString,
+            til_dot_md__orchestrator__msg__pb2.MDRulesUpdateResponse.FromString,
+            options, channel_credentials,
+            insecure, call_credentials, compression, wait_for_ready, timeout, metadata)
+
+    @staticmethod
+    def GetRule(request,
+            target,
+            options=(),
+            channel_credentials=None,
+            call_credentials=None,
+            insecure=False,
+            compression=None,
+            wait_for_ready=None,
+            timeout=None,
+            metadata=None):
+        return grpc.experimental.unary_unary(request, target, '/til.MDRulesUpdaterCommunicator/GetRule',
+            til_dot_md__orchestrator__msg__pb2.MDRulesUpdateRequest.SerializeToString,
+            til_dot_md__orchestrator__msg__pb2.MDRulesUpdateResponse.FromString,
+            options, channel_credentials,
+            insecure, call_credentials, compression, wait_for_ready, timeout, metadata)
+
+    @staticmethod
+    def CreateRule(request,
+            target,
+            options=(),
+            channel_credentials=None,
+            call_credentials=None,
+            insecure=False,
+            compression=None,
+            wait_for_ready=None,
+            timeout=None,
+            metadata=None):
+        return grpc.experimental.unary_unary(request, target, '/til.MDRulesUpdaterCommunicator/CreateRule',
+            til_dot_md__orchestrator__msg__pb2.MDRulesUpdateRequest.SerializeToString,
+            til_dot_md__orchestrator__msg__pb2.MDRulesUpdateResponse.FromString,
+            options, channel_credentials,
+            insecure, call_credentials, compression, wait_for_ready, timeout, metadata)
+
+    @staticmethod
+    def UpdateRule(request,
+            target,
+            options=(),
+            channel_credentials=None,
+            call_credentials=None,
+            insecure=False,
+            compression=None,
+            wait_for_ready=None,
+            timeout=None,
+            metadata=None):
+        return grpc.experimental.unary_unary(request, target, '/til.MDRulesUpdaterCommunicator/UpdateRule',
+            til_dot_md__orchestrator__msg__pb2.MDRulesUpdateRequest.SerializeToString,
+            til_dot_md__orchestrator__msg__pb2.MDRulesUpdateResponse.FromString,
+            options, channel_credentials,
+            insecure, call_credentials, compression, wait_for_ready, timeout, metadata)
+
+    @staticmethod
+    def DeleteRule(request,
+            target,
+            options=(),
+            channel_credentials=None,
+            call_credentials=None,
+            insecure=False,
+            compression=None,
+            wait_for_ready=None,
+            timeout=None,
+            metadata=None):
+        return grpc.experimental.unary_unary(request, target, '/til.MDRulesUpdaterCommunicator/DeleteRule',
+            til_dot_md__orchestrator__msg__pb2.MDRulesUpdateRequest.SerializeToString,
+            til_dot_md__orchestrator__msg__pb2.MDRulesUpdateResponse.FromString,
+            options, channel_credentials,
+            insecure, call_credentials, compression, wait_for_ready, timeout, metadata)
+
+    @staticmethod
+    def CleanupRules(request,
+            target,
+            options=(),
+            channel_credentials=None,
+            call_credentials=None,
+            insecure=False,
+            compression=None,
+            wait_for_ready=None,
+            timeout=None,
+            metadata=None):
+        return grpc.experimental.unary_unary(request, target, '/til.MDRulesUpdaterCommunicator/CleanupRules',
+            til_dot_md__orchestrator__msg__pb2.MDRulesUpdateRequest.SerializeToString,
+            til_dot_md__orchestrator__msg__pb2.MDRulesUpdateResponse.FromString,
+            options, channel_credentials,
+            insecure, call_credentials, compression, wait_for_ready, timeout, metadata)
+
+    @staticmethod
+    def CheckHealth(request,
+            target,
+            options=(),
+            channel_credentials=None,
+            call_credentials=None,
+            insecure=False,
+            compression=None,
+            wait_for_ready=None,
+            timeout=None,
+            metadata=None):
+        return grpc.experimental.unary_unary(request, target, '/til.MDRulesUpdaterCommunicator/CheckHealth',
+            til_dot_md__orchestrator__msg__pb2.MDRulesUpdateRequest.SerializeToString,
+            til_dot_md__orchestrator__msg__pb2.MDRulesUpdateResponse.FromString,
+            options, channel_credentials,
+            insecure, call_credentials, compression, wait_for_ready, timeout, metadata)

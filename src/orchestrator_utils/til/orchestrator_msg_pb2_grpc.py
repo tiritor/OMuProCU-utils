@@ -1438,3 +1438,488 @@ class TIFControlCommunicator(object):
             til_dot_orchestrator__msg__pb2.TIFControlResponse.FromString,
             options, channel_credentials,
             insecure, call_credentials, compression, wait_for_ready, timeout, metadata)
+
+
+class RulesUpdaterCommunicatorStub(object):
+    """Missing associated documentation comment in .proto file."""
+
+    def __init__(self, channel):
+        """Constructor.
+
+        Args:
+            channel: A grpc.Channel.
+        """
+        self.CreateRules = channel.unary_unary(
+                '/til.RulesUpdaterCommunicator/CreateRules',
+                request_serializer=til_dot_orchestrator__msg__pb2.TIFControlRequest.SerializeToString,
+                response_deserializer=til_dot_orchestrator__msg__pb2.TIFControlResponse.FromString,
+                )
+        self.DeleteRules = channel.unary_unary(
+                '/til.RulesUpdaterCommunicator/DeleteRules',
+                request_serializer=til_dot_orchestrator__msg__pb2.TIFControlRequest.SerializeToString,
+                response_deserializer=til_dot_orchestrator__msg__pb2.TIFControlResponse.FromString,
+                )
+        self.UpdateRules = channel.unary_unary(
+                '/til.RulesUpdaterCommunicator/UpdateRules',
+                request_serializer=til_dot_orchestrator__msg__pb2.TIFControlRequest.SerializeToString,
+                response_deserializer=til_dot_orchestrator__msg__pb2.TIFControlResponse.FromString,
+                )
+        self.GetRules = channel.unary_unary(
+                '/til.RulesUpdaterCommunicator/GetRules',
+                request_serializer=til_dot_orchestrator__msg__pb2.TIFControlRequest.SerializeToString,
+                response_deserializer=til_dot_orchestrator__msg__pb2.TIFControlResponse.FromString,
+                )
+        self.ListRules = channel.unary_unary(
+                '/til.RulesUpdaterCommunicator/ListRules',
+                request_serializer=til_dot_orchestrator__msg__pb2.TIFControlRequest.SerializeToString,
+                response_deserializer=til_dot_orchestrator__msg__pb2.TIFControlResponse.FromString,
+                )
+        self.Cleanup = channel.unary_unary(
+                '/til.RulesUpdaterCommunicator/Cleanup',
+                request_serializer=til_dot_orchestrator__msg__pb2.TIFControlRequest.SerializeToString,
+                response_deserializer=til_dot_orchestrator__msg__pb2.TIFControlResponse.FromString,
+                )
+
+
+class RulesUpdaterCommunicatorServicer(object):
+    """Missing associated documentation comment in .proto file."""
+
+    def CreateRules(self, request, context):
+        """Missing associated documentation comment in .proto file."""
+        context.set_code(grpc.StatusCode.UNIMPLEMENTED)
+        context.set_details('Method not implemented!')
+        raise NotImplementedError('Method not implemented!')
+
+    def DeleteRules(self, request, context):
+        """Missing associated documentation comment in .proto file."""
+        context.set_code(grpc.StatusCode.UNIMPLEMENTED)
+        context.set_details('Method not implemented!')
+        raise NotImplementedError('Method not implemented!')
+
+    def UpdateRules(self, request, context):
+        """Missing associated documentation comment in .proto file."""
+        context.set_code(grpc.StatusCode.UNIMPLEMENTED)
+        context.set_details('Method not implemented!')
+        raise NotImplementedError('Method not implemented!')
+
+    def GetRules(self, request, context):
+        """Missing associated documentation comment in .proto file."""
+        context.set_code(grpc.StatusCode.UNIMPLEMENTED)
+        context.set_details('Method not implemented!')
+        raise NotImplementedError('Method not implemented!')
+
+    def ListRules(self, request, context):
+        """Missing associated documentation comment in .proto file."""
+        context.set_code(grpc.StatusCode.UNIMPLEMENTED)
+        context.set_details('Method not implemented!')
+        raise NotImplementedError('Method not implemented!')
+
+    def Cleanup(self, request, context):
+        """Missing associated documentation comment in .proto file."""
+        context.set_code(grpc.StatusCode.UNIMPLEMENTED)
+        context.set_details('Method not implemented!')
+        raise NotImplementedError('Method not implemented!')
+
+
+def add_RulesUpdaterCommunicatorServicer_to_server(servicer, server):
+    rpc_method_handlers = {
+            'CreateRules': grpc.unary_unary_rpc_method_handler(
+                    servicer.CreateRules,
+                    request_deserializer=til_dot_orchestrator__msg__pb2.TIFControlRequest.FromString,
+                    response_serializer=til_dot_orchestrator__msg__pb2.TIFControlResponse.SerializeToString,
+            ),
+            'DeleteRules': grpc.unary_unary_rpc_method_handler(
+                    servicer.DeleteRules,
+                    request_deserializer=til_dot_orchestrator__msg__pb2.TIFControlRequest.FromString,
+                    response_serializer=til_dot_orchestrator__msg__pb2.TIFControlResponse.SerializeToString,
+            ),
+            'UpdateRules': grpc.unary_unary_rpc_method_handler(
+                    servicer.UpdateRules,
+                    request_deserializer=til_dot_orchestrator__msg__pb2.TIFControlRequest.FromString,
+                    response_serializer=til_dot_orchestrator__msg__pb2.TIFControlResponse.SerializeToString,
+            ),
+            'GetRules': grpc.unary_unary_rpc_method_handler(
+                    servicer.GetRules,
+                    request_deserializer=til_dot_orchestrator__msg__pb2.TIFControlRequest.FromString,
+                    response_serializer=til_dot_orchestrator__msg__pb2.TIFControlResponse.SerializeToString,
+            ),
+            'ListRules': grpc.unary_unary_rpc_method_handler(
+                    servicer.ListRules,
+                    request_deserializer=til_dot_orchestrator__msg__pb2.TIFControlRequest.FromString,
+                    response_serializer=til_dot_orchestrator__msg__pb2.TIFControlResponse.SerializeToString,
+            ),
+            'Cleanup': grpc.unary_unary_rpc_method_handler(
+                    servicer.Cleanup,
+                    request_deserializer=til_dot_orchestrator__msg__pb2.TIFControlRequest.FromString,
+                    response_serializer=til_dot_orchestrator__msg__pb2.TIFControlResponse.SerializeToString,
+            ),
+    }
+    generic_handler = grpc.method_handlers_generic_handler(
+            'til.RulesUpdaterCommunicator', rpc_method_handlers)
+    server.add_generic_rpc_handlers((generic_handler,))
+
+
+ # This class is part of an EXPERIMENTAL API.
+class RulesUpdaterCommunicator(object):
+    """Missing associated documentation comment in .proto file."""
+
+    @staticmethod
+    def CreateRules(request,
+            target,
+            options=(),
+            channel_credentials=None,
+            call_credentials=None,
+            insecure=False,
+            compression=None,
+            wait_for_ready=None,
+            timeout=None,
+            metadata=None):
+        return grpc.experimental.unary_unary(request, target, '/til.RulesUpdaterCommunicator/CreateRules',
+            til_dot_orchestrator__msg__pb2.TIFControlRequest.SerializeToString,
+            til_dot_orchestrator__msg__pb2.TIFControlResponse.FromString,
+            options, channel_credentials,
+            insecure, call_credentials, compression, wait_for_ready, timeout, metadata)
+
+    @staticmethod
+    def DeleteRules(request,
+            target,
+            options=(),
+            channel_credentials=None,
+            call_credentials=None,
+            insecure=False,
+            compression=None,
+            wait_for_ready=None,
+            timeout=None,
+            metadata=None):
+        return grpc.experimental.unary_unary(request, target, '/til.RulesUpdaterCommunicator/DeleteRules',
+            til_dot_orchestrator__msg__pb2.TIFControlRequest.SerializeToString,
+            til_dot_orchestrator__msg__pb2.TIFControlResponse.FromString,
+            options, channel_credentials,
+            insecure, call_credentials, compression, wait_for_ready, timeout, metadata)
+
+    @staticmethod
+    def UpdateRules(request,
+            target,
+            options=(),
+            channel_credentials=None,
+            call_credentials=None,
+            insecure=False,
+            compression=None,
+            wait_for_ready=None,
+            timeout=None,
+            metadata=None):
+        return grpc.experimental.unary_unary(request, target, '/til.RulesUpdaterCommunicator/UpdateRules',
+            til_dot_orchestrator__msg__pb2.TIFControlRequest.SerializeToString,
+            til_dot_orchestrator__msg__pb2.TIFControlResponse.FromString,
+            options, channel_credentials,
+            insecure, call_credentials, compression, wait_for_ready, timeout, metadata)
+
+    @staticmethod
+    def GetRules(request,
+            target,
+            options=(),
+            channel_credentials=None,
+            call_credentials=None,
+            insecure=False,
+            compression=None,
+            wait_for_ready=None,
+            timeout=None,
+            metadata=None):
+        return grpc.experimental.unary_unary(request, target, '/til.RulesUpdaterCommunicator/GetRules',
+            til_dot_orchestrator__msg__pb2.TIFControlRequest.SerializeToString,
+            til_dot_orchestrator__msg__pb2.TIFControlResponse.FromString,
+            options, channel_credentials,
+            insecure, call_credentials, compression, wait_for_ready, timeout, metadata)
+
+    @staticmethod
+    def ListRules(request,
+            target,
+            options=(),
+            channel_credentials=None,
+            call_credentials=None,
+            insecure=False,
+            compression=None,
+            wait_for_ready=None,
+            timeout=None,
+            metadata=None):
+        return grpc.experimental.unary_unary(request, target, '/til.RulesUpdaterCommunicator/ListRules',
+            til_dot_orchestrator__msg__pb2.TIFControlRequest.SerializeToString,
+            til_dot_orchestrator__msg__pb2.TIFControlResponse.FromString,
+            options, channel_credentials,
+            insecure, call_credentials, compression, wait_for_ready, timeout, metadata)
+
+    @staticmethod
+    def Cleanup(request,
+            target,
+            options=(),
+            channel_credentials=None,
+            call_credentials=None,
+            insecure=False,
+            compression=None,
+            wait_for_ready=None,
+            timeout=None,
+            metadata=None):
+        return grpc.experimental.unary_unary(request, target, '/til.RulesUpdaterCommunicator/Cleanup',
+            til_dot_orchestrator__msg__pb2.TIFControlRequest.SerializeToString,
+            til_dot_orchestrator__msg__pb2.TIFControlResponse.FromString,
+            options, channel_credentials,
+            insecure, call_credentials, compression, wait_for_ready, timeout, metadata)
+
+
+class SwitchStateCommunicatorStub(object):
+    """Missing associated documentation comment in .proto file."""
+
+    def __init__(self, channel):
+        """Constructor.
+
+        Args:
+            channel: A grpc.Channel.
+        """
+        self.GetSwitchState = channel.unary_unary(
+                '/til.SwitchStateCommunicator/GetSwitchState',
+                request_serializer=til_dot_orchestrator__msg__pb2.TIFControlRequest.SerializeToString,
+                response_deserializer=til_dot_orchestrator__msg__pb2.TIFControlResponse.FromString,
+                )
+        self.GetSwitchStateForPort = channel.unary_unary(
+                '/til.SwitchStateCommunicator/GetSwitchStateForPort',
+                request_serializer=til_dot_orchestrator__msg__pb2.TIFControlRequest.SerializeToString,
+                response_deserializer=til_dot_orchestrator__msg__pb2.TIFControlResponse.FromString,
+                )
+        self.SetSwitchState = channel.unary_unary(
+                '/til.SwitchStateCommunicator/SetSwitchState',
+                request_serializer=til_dot_orchestrator__msg__pb2.TIFControlRequest.SerializeToString,
+                response_deserializer=til_dot_orchestrator__msg__pb2.TIFControlResponse.FromString,
+                )
+        self.SetTenantRules = channel.unary_unary(
+                '/til.SwitchStateCommunicator/SetTenantRules',
+                request_serializer=til_dot_orchestrator__msg__pb2.TIFControlRequest.SerializeToString,
+                response_deserializer=til_dot_orchestrator__msg__pb2.TIFControlResponse.FromString,
+                )
+        self.GetTenantRules = channel.unary_unary(
+                '/til.SwitchStateCommunicator/GetTenantRules',
+                request_serializer=til_dot_orchestrator__msg__pb2.TIFControlRequest.SerializeToString,
+                response_deserializer=til_dot_orchestrator__msg__pb2.TIFControlResponse.FromString,
+                )
+        self.SetProviderRules = channel.unary_unary(
+                '/til.SwitchStateCommunicator/SetProviderRules',
+                request_serializer=til_dot_orchestrator__msg__pb2.TIFControlRequest.SerializeToString,
+                response_deserializer=til_dot_orchestrator__msg__pb2.TIFControlResponse.FromString,
+                )
+        self.GetProviderRules = channel.unary_unary(
+                '/til.SwitchStateCommunicator/GetProviderRules',
+                request_serializer=til_dot_orchestrator__msg__pb2.TIFControlRequest.SerializeToString,
+                response_deserializer=til_dot_orchestrator__msg__pb2.TIFControlResponse.FromString,
+                )
+
+
+class SwitchStateCommunicatorServicer(object):
+    """Missing associated documentation comment in .proto file."""
+
+    def GetSwitchState(self, request, context):
+        """Missing associated documentation comment in .proto file."""
+        context.set_code(grpc.StatusCode.UNIMPLEMENTED)
+        context.set_details('Method not implemented!')
+        raise NotImplementedError('Method not implemented!')
+
+    def GetSwitchStateForPort(self, request, context):
+        """Missing associated documentation comment in .proto file."""
+        context.set_code(grpc.StatusCode.UNIMPLEMENTED)
+        context.set_details('Method not implemented!')
+        raise NotImplementedError('Method not implemented!')
+
+    def SetSwitchState(self, request, context):
+        """Missing associated documentation comment in .proto file."""
+        context.set_code(grpc.StatusCode.UNIMPLEMENTED)
+        context.set_details('Method not implemented!')
+        raise NotImplementedError('Method not implemented!')
+
+    def SetTenantRules(self, request, context):
+        """Missing associated documentation comment in .proto file."""
+        context.set_code(grpc.StatusCode.UNIMPLEMENTED)
+        context.set_details('Method not implemented!')
+        raise NotImplementedError('Method not implemented!')
+
+    def GetTenantRules(self, request, context):
+        """Missing associated documentation comment in .proto file."""
+        context.set_code(grpc.StatusCode.UNIMPLEMENTED)
+        context.set_details('Method not implemented!')
+        raise NotImplementedError('Method not implemented!')
+
+    def SetProviderRules(self, request, context):
+        """Missing associated documentation comment in .proto file."""
+        context.set_code(grpc.StatusCode.UNIMPLEMENTED)
+        context.set_details('Method not implemented!')
+        raise NotImplementedError('Method not implemented!')
+
+    def GetProviderRules(self, request, context):
+        """Missing associated documentation comment in .proto file."""
+        context.set_code(grpc.StatusCode.UNIMPLEMENTED)
+        context.set_details('Method not implemented!')
+        raise NotImplementedError('Method not implemented!')
+
+
+def add_SwitchStateCommunicatorServicer_to_server(servicer, server):
+    rpc_method_handlers = {
+            'GetSwitchState': grpc.unary_unary_rpc_method_handler(
+                    servicer.GetSwitchState,
+                    request_deserializer=til_dot_orchestrator__msg__pb2.TIFControlRequest.FromString,
+                    response_serializer=til_dot_orchestrator__msg__pb2.TIFControlResponse.SerializeToString,
+            ),
+            'GetSwitchStateForPort': grpc.unary_unary_rpc_method_handler(
+                    servicer.GetSwitchStateForPort,
+                    request_deserializer=til_dot_orchestrator__msg__pb2.TIFControlRequest.FromString,
+                    response_serializer=til_dot_orchestrator__msg__pb2.TIFControlResponse.SerializeToString,
+            ),
+            'SetSwitchState': grpc.unary_unary_rpc_method_handler(
+                    servicer.SetSwitchState,
+                    request_deserializer=til_dot_orchestrator__msg__pb2.TIFControlRequest.FromString,
+                    response_serializer=til_dot_orchestrator__msg__pb2.TIFControlResponse.SerializeToString,
+            ),
+            'SetTenantRules': grpc.unary_unary_rpc_method_handler(
+                    servicer.SetTenantRules,
+                    request_deserializer=til_dot_orchestrator__msg__pb2.TIFControlRequest.FromString,
+                    response_serializer=til_dot_orchestrator__msg__pb2.TIFControlResponse.SerializeToString,
+            ),
+            'GetTenantRules': grpc.unary_unary_rpc_method_handler(
+                    servicer.GetTenantRules,
+                    request_deserializer=til_dot_orchestrator__msg__pb2.TIFControlRequest.FromString,
+                    response_serializer=til_dot_orchestrator__msg__pb2.TIFControlResponse.SerializeToString,
+            ),
+            'SetProviderRules': grpc.unary_unary_rpc_method_handler(
+                    servicer.SetProviderRules,
+                    request_deserializer=til_dot_orchestrator__msg__pb2.TIFControlRequest.FromString,
+                    response_serializer=til_dot_orchestrator__msg__pb2.TIFControlResponse.SerializeToString,
+            ),
+            'GetProviderRules': grpc.unary_unary_rpc_method_handler(
+                    servicer.GetProviderRules,
+                    request_deserializer=til_dot_orchestrator__msg__pb2.TIFControlRequest.FromString,
+                    response_serializer=til_dot_orchestrator__msg__pb2.TIFControlResponse.SerializeToString,
+            ),
+    }
+    generic_handler = grpc.method_handlers_generic_handler(
+            'til.SwitchStateCommunicator', rpc_method_handlers)
+    server.add_generic_rpc_handlers((generic_handler,))
+
+
+ # This class is part of an EXPERIMENTAL API.
+class SwitchStateCommunicator(object):
+    """Missing associated documentation comment in .proto file."""
+
+    @staticmethod
+    def GetSwitchState(request,
+            target,
+            options=(),
+            channel_credentials=None,
+            call_credentials=None,
+            insecure=False,
+            compression=None,
+            wait_for_ready=None,
+            timeout=None,
+            metadata=None):
+        return grpc.experimental.unary_unary(request, target, '/til.SwitchStateCommunicator/GetSwitchState',
+            til_dot_orchestrator__msg__pb2.TIFControlRequest.SerializeToString,
+            til_dot_orchestrator__msg__pb2.TIFControlResponse.FromString,
+            options, channel_credentials,
+            insecure, call_credentials, compression, wait_for_ready, timeout, metadata)
+
+    @staticmethod
+    def GetSwitchStateForPort(request,
+            target,
+            options=(),
+            channel_credentials=None,
+            call_credentials=None,
+            insecure=False,
+            compression=None,
+            wait_for_ready=None,
+            timeout=None,
+            metadata=None):
+        return grpc.experimental.unary_unary(request, target, '/til.SwitchStateCommunicator/GetSwitchStateForPort',
+            til_dot_orchestrator__msg__pb2.TIFControlRequest.SerializeToString,
+            til_dot_orchestrator__msg__pb2.TIFControlResponse.FromString,
+            options, channel_credentials,
+            insecure, call_credentials, compression, wait_for_ready, timeout, metadata)
+
+    @staticmethod
+    def SetSwitchState(request,
+            target,
+            options=(),
+            channel_credentials=None,
+            call_credentials=None,
+            insecure=False,
+            compression=None,
+            wait_for_ready=None,
+            timeout=None,
+            metadata=None):
+        return grpc.experimental.unary_unary(request, target, '/til.SwitchStateCommunicator/SetSwitchState',
+            til_dot_orchestrator__msg__pb2.TIFControlRequest.SerializeToString,
+            til_dot_orchestrator__msg__pb2.TIFControlResponse.FromString,
+            options, channel_credentials,
+            insecure, call_credentials, compression, wait_for_ready, timeout, metadata)
+
+    @staticmethod
+    def SetTenantRules(request,
+            target,
+            options=(),
+            channel_credentials=None,
+            call_credentials=None,
+            insecure=False,
+            compression=None,
+            wait_for_ready=None,
+            timeout=None,
+            metadata=None):
+        return grpc.experimental.unary_unary(request, target, '/til.SwitchStateCommunicator/SetTenantRules',
+            til_dot_orchestrator__msg__pb2.TIFControlRequest.SerializeToString,
+            til_dot_orchestrator__msg__pb2.TIFControlResponse.FromString,
+            options, channel_credentials,
+            insecure, call_credentials, compression, wait_for_ready, timeout, metadata)
+
+    @staticmethod
+    def GetTenantRules(request,
+            target,
+            options=(),
+            channel_credentials=None,
+            call_credentials=None,
+            insecure=False,
+            compression=None,
+            wait_for_ready=None,
+            timeout=None,
+            metadata=None):
+        return grpc.experimental.unary_unary(request, target, '/til.SwitchStateCommunicator/GetTenantRules',
+            til_dot_orchestrator__msg__pb2.TIFControlRequest.SerializeToString,
+            til_dot_orchestrator__msg__pb2.TIFControlResponse.FromString,
+            options, channel_credentials,
+            insecure, call_credentials, compression, wait_for_ready, timeout, metadata)
+
+    @staticmethod
+    def SetProviderRules(request,
+            target,
+            options=(),
+            channel_credentials=None,
+            call_credentials=None,
+            insecure=False,
+            compression=None,
+            wait_for_ready=None,
+            timeout=None,
+            metadata=None):
+        return grpc.experimental.unary_unary(request, target, '/til.SwitchStateCommunicator/SetProviderRules',
+            til_dot_orchestrator__msg__pb2.TIFControlRequest.SerializeToString,
+            til_dot_orchestrator__msg__pb2.TIFControlResponse.FromString,
+            options, channel_credentials,
+            insecure, call_credentials, compression, wait_for_ready, timeout, metadata)
+
+    @staticmethod
+    def GetProviderRules(request,
+            target,
+            options=(),
+            channel_credentials=None,
+            call_credentials=None,
+            insecure=False,
+            compression=None,
+            wait_for_ready=None,
+            timeout=None,
+            metadata=None):
+        return grpc.experimental.unary_unary(request, target, '/til.SwitchStateCommunicator/GetProviderRules',
+            til_dot_orchestrator__msg__pb2.TIFControlRequest.SerializeToString,
+            til_dot_orchestrator__msg__pb2.TIFControlResponse.FromString,
+            options, channel_credentials,
+            insecure, call_credentials, compression, wait_for_ready, timeout, metadata)

@@ -165,10 +165,8 @@ class TDCValidator(Validator):
         """
         tdc = yaml.safe_load(raw_tdc)
         self.tdc = tdc
-        if self.tdc_id is None or self.tdc_id == -1:
-            self.tdc_id = tdc["id"]
-        if self.tdc_name is None or self.tdc_name == "":
-            self.tdc_name = tdc["name"]
+        self.tdc_id = tdc["id"]
+        self.tdc_name = tdc["name"]
         self.tcd = tdc["TCD"]
         self.til = tdc["TIL"]
         self.inc = tdc["INC"]
@@ -239,6 +237,11 @@ class TDCValidator(Validator):
         update_request : bool
             If this is true, it can exist for the specified tenant and should be checked, if it is only updating its TDC.
         """
+        if delete_request:
+            if mainIngressName in self.tenant_security_config[str(self.tdc_id)]["devices"][self.device_name]["mainIngressNames"]:
+                return True
+            else:
+                self.logger.error("MainIngressName {} does not exist and cannot validated!".format(mainIngressName))
         for tenant_id in self.tenant_security_config.keys():
             for existing_mainIngressName in self.tenant_security_config[tenant_id]["devices"][self.device_name]["mainIngressNames"]:
                 if mainIngressName == existing_mainIngressName:
@@ -246,9 +249,9 @@ class TDCValidator(Validator):
                         return True
                     self.logger.error("MainIngressName {} is not unique since it is already used!".format(mainIngressName))
                     return False
-                elif delete_request :
-                    self.logger.error("MainIngressName {} does not exist and cannot validated!".format(mainIngressName))
-                    return False
+                # elif delete_request :
+                #     self.logger.error("MainIngressName {} does not exist and cannot validated!".format(mainIngressName))
+                #     return False
         return True
 
     def validate_tcd(self, update_request = False, delete_request = False):
@@ -511,8 +514,9 @@ class TDCValidator(Validator):
                 Main ingress name used in this TDC.
             """
             ingressName = actionName.split(".")[0]
-            if ingressName != mainIngressName:
-                raise TDCValidationException("Ingress name of action name does not match the specified ingress for the TDC!")
+            # FIXME: This must be checked if it is in the INC part of the TDC!
+            # if ingressName != mainIngressName:
+            #     raise TDCValidationException("Ingress name of action name does not match the specified ingress for the TDC!")
             return True
 
         def validate_tableName(tableName, mainIngressName):
@@ -680,8 +684,11 @@ class TDCValidator(Validator):
         try:
             if not self.validate_unique_mainIngressName(self.inc["mainIngressName"], update_request, delete_request):
                 raise INCIngressNameException("Name of Main Ingress is not unique!")
-            if self.inc["mainIngressName"] not in self.tenant_security_config[str(self.tdc_id)]["devices"][self.device_name]["mainIngressNames"] and not delete_request: 
-                self.tenant_security_config[str(self.tdc_id)]["devices"][self.device_name]["mainIngressNames"].append(self.inc["mainIngressName"])
+            if self.inc["mainIngressName"] not in self.tenant_security_config[str(self.tdc_id)]["devices"][self.device_name]["mainIngressNames"]:
+                if not delete_request: 
+                    self.tenant_security_config[str(self.tdc_id)]["devices"][self.device_name]["mainIngressNames"].append(self.inc["mainIngressName"])
+                else:
+                    self.tenant_security_config[str(self.tdc_id)]["devices"][self.device_name]["mainIngressNames"].remove(self.inc["mainIngressName"])
             blockedList = self.generate_blacklist_for_mainIngressNames()
             check_include_access_violation(self.inc["p4Code"])
             check_extern_access_violation(self.inc["p4Code"], self.extern_blacklist[self.tcd["acceleratorType"]])
@@ -787,6 +794,7 @@ class MDTDCValidator(TDCValidator):
                     raise MDTDCValidationException("Neither deviceName nor deviceCategory is defined!")
                 for device_name in device_names:
                     self.device_name = device_name
+                    tdc["manifest"]["id"] = self.mdtdc_id
                     if not super().validate(str(tdc["manifest"]), update_request=update_request, delete_request=delete_request):
                         tdc_identifier = "deviceName" if "deviceName" in tdc.keys() else "deviceCategory"
                         raise MDTDCValidationException("TDC for {} {} is not valid!".format(tdc_identifier, tdc[tdc_identifier]))
@@ -796,6 +804,9 @@ class MDTDCValidator(TDCValidator):
             self.logger.error(e.__str__())
             return False
         except TypeError as e:
+            self.logger.error(e.__str__())
+            return False
+        except Exception as e:
             self.logger.error(e.__str__())
             return False
         self.logger.info("MDTDC validated!")

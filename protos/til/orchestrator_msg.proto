@@ -99,6 +99,26 @@ service TIFControlCommunicator {
     rpc DeleteTableEntries (TIFControlRequest) returns (TIFControlResponse);
 }
 
+service RulesUpdaterCommunicator {
+    rpc CreateRules (TIFControlRequest) returns (TIFControlResponse);
+    rpc DeleteRules (TIFControlRequest) returns (TIFControlResponse);
+    rpc UpdateRules (TIFControlRequest) returns (TIFControlResponse);
+    rpc GetRules (TIFControlRequest) returns (TIFControlResponse);
+    rpc ListRules (TIFControlRequest) returns (TIFControlResponse);
+    rpc Cleanup (TIFControlRequest) returns (TIFControlResponse);
+  }
+  
+
+service SwitchStateCommunicator {
+    rpc GetSwitchState (TIFControlRequest) returns (TIFControlResponse);
+    rpc GetSwitchStateForPort (TIFControlRequest) returns (TIFControlResponse);
+    rpc SetSwitchState (TIFControlRequest) returns (TIFControlResponse);
+    rpc SetTenantRules (TIFControlRequest) returns (TIFControlResponse);
+    rpc GetTenantRules (TIFControlRequest) returns (TIFControlResponse);
+    rpc SetProviderRules (TIFControlRequest) returns (TIFControlResponse);
+    rpc GetProviderRules (TIFControlRequest) returns (TIFControlResponse);
+}
+
 // -----------
 
 message INTenantConfig {
@@ -109,6 +129,7 @@ message INTenantConfig {
     UpdateAction updateAction = 5;
     AcceleratorType acceleratorType = 6;
     uint32 processTime = 7;
+    repeated RuntimeRule runtimeRules = 8;
 }
 
 // ----------- Schedule Commmunication
@@ -204,6 +225,8 @@ message TIFControlRequest {
     repeated RoutingTableConfiguration arpHostEntries = 4;
     repeated DpPort dpPorts = 5;
     bool clear = 6;
+    repeated RuntimeRule runtimeRules = 7;
+    TenantMetadata tenantMetadata = 8;
 }
 
 message TIFControlResponse {
@@ -214,4 +237,6 @@ message TIFControlResponse {
     repeated RoutingTableConfiguration nexthopMapEntries = 5;
     repeated RoutingTableConfiguration ipv4HostEntries = 6;
     repeated RoutingTableConfiguration arpHostEntries = 7;
+    repeated RuntimeRule runtimeRules = 8;
+    TenantMetadata tenantMetadata = 9;
 }
